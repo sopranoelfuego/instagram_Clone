@@ -1,0 +1,23 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+
+
+
+
+
+      <div className="post__container">
+      <div className="post">
+           {/*postes.map(post =><Post key={post.id} id={post.id} post={post.post} />)*/}
+           
+
+         </div>
+         <div className="post__online">
+         <img src="/images/1.jpg" style={{width:"100%"}}/>
+         </div>
+
+      
+         
+    
+    </div>
