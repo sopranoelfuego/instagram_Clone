@@ -4,6 +4,7 @@
   box-sizing: border-box;
 
 }
+
  .App {
 
   background-color: cyan;
@@ -71,6 +72,7 @@
 }
 .post__online{
   position: fixed;
+  
 
   width: 40%;
   right: 4px;
@@ -78,7 +80,12 @@
   top: 20%;
   padding-right: 80px;
 }
+.app__addPost{
 
+  padding-left:20px ;
+  padding-right:20px ;
+  box-sizing: border-box;
+}
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width:600px){
   *{
@@ -118,6 +125,12 @@
     align-self: center;
 
 
+  }
+  .app__addPost{
+    height: 80%;
+    padding-left:10px ;
+    padding-right:10px ;
+    box-sizing: border-box;
   }
 
 }

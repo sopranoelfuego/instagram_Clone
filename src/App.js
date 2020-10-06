@@ -16,6 +16,7 @@ import MenuBar from "./components/MenuBar"
 import SignUpModal from "./components/SignUpModal"
 import SignInModal from "./components/SigninModal"
 import Alert from  "@material-ui/lab/Alert"
+import AddPost from "./components/AddPost"
 
 
 
@@ -88,6 +89,7 @@ const [openModalSignin,setOpenModalSign]=useState(false)
 const [email,setEmail]=useState("")
 const [userName,setUserName]=useState("")
 const [password,setPassword]=useState("")
+const [openAddPost,setOpenAddPost]=useState(false)
 const [user,setUser]=useState(null)
 
 
@@ -167,9 +169,10 @@ console.log("OpenModalSignin value after update:",openModalSignin)
 
   return (
     <div className="root">
-    <MenuBar setOpenModalSign={setOpenModalSign} setOpenModal={setOpenModal} openModalSignin={openModalSignin} user={user}/>
+    <MenuBar setOpenModalSign={setOpenModalSign} setOpenModal={setOpenModal} openModalSignin={openModalSignin} user={user} setOpenAddPost={setOpenAddPost}/>
     <SignUpModal openSignUpModal={openSignupModal} setUserName={setUserName} setEmail={setEmail} setPassword={setPassword} signup={signup} setOpenModal={setOpenModal} classes={classes}/>
     <SignInModal openModalSignin={openModalSignin} setEmail={setEmail} setPassword={setPassword} signin={signin} setOpenModalSign={setOpenModalSign} classes={classes}/>
+    <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} />
     {/*posts*/}
        
       <div className="post__container">
