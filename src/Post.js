@@ -2,8 +2,9 @@ import React from "react"
 import radium from "radium";
 import {makeStyles}from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
-
+import MoreVertIcon from  "@material-ui/icons/MoreVert"
 import Skeleton from "@material-ui/lab/Skeleton"
+import IconButton from "@material-ui/core/IconButton"
 
 const useStyle=makeStyles(theme=>(
      {
@@ -26,12 +27,29 @@ const useStyle=makeStyles(theme=>(
                 
             }
          },
-         post__header:{
+         post_headerContainer:{
+
              display:"flex",
-             alignItems:"center",
+             flexDirection:"row",
+             justifyContent:"space between",
+             alignItems:"stretch",
              borderBottom:"1px solid lightgray"
 
+
          },
+         post__header:{
+             width:"90%",
+
+             display:"flex",
+             alignItems:"center",
+
+
+         },
+          MoreVertIcon:{
+              width:"10%",
+              paddingTop:"10px",
+              zIndex:"-1"
+            },
          post__avatar:{
             margin:theme.spacing(1),
              zIndex:"-1"
@@ -57,26 +75,22 @@ const {username,avatar,caption,imageUrl}=props.post
 const {id}=props.id
 const classes=useStyle()
 
-    const styleImage={
-       
-       height:"450px",
-       objectFit:"contain",
-       opacity:"0.99",
-       margin:"0",
-       ':hover':{
-           opacity:"1.0",
-           
-       }
-    }
+    
     return (
         <div className={classes.root}>
 
            {/* header post__header*/ }
-           <div className={classes.post__header}>
-           {avatar?<Avatar src={avatar} className={classes.post__avatar} />:<Skeleton variant="circle"><Avatar/></Skeleton>
-        }
-           <p className={classes.post__username}>{username}</p> 
-
+           <div className={classes.post_headerContainer}>
+                 <div className={classes.post__header}>
+                {avatar?<Avatar src={avatar} className={classes.post__avatar} />:<Skeleton variant="circle"><Avatar/></Skeleton>}
+                <p className={classes.post__username}>{username}</p> 
+     
+                </div>
+                <div className={classes.MoreVertIcon}>
+                <IconButton aria-label="settings">
+                <MoreVertIcon />
+                 </IconButton>
+                </div>
            </div>
 
 

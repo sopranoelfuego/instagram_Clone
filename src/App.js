@@ -52,6 +52,7 @@ const useStyle=makeStyles((theme)=>({
      backgroundColor:"#FAFAFA"
    },
    containers:{
+
     alginItems:"center",
      height:"500px",
      marginTop:"70px",
