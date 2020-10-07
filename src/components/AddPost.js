@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Dialog from "@material-ui/core/Dialog"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogTitle from "@material-ui/core/DialogTitle"
@@ -10,6 +10,7 @@ import Alert from "@material-ui/lab/Alert"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import AddIcon from '@material-ui/icons/Add';
+import IconButton from "@material-ui/core/IconButton"
 
 
 const useStyle=makeStyles(theme=>({
@@ -31,7 +32,11 @@ const useStyle=makeStyles(theme=>({
 
      },
      addPost__addIcon:{
-         fontSize:"50px"
+         fontSize:"50px",
+         color:"black",
+         ":hover":{
+           color:"blue"
+         }
      },
      addPost__imageContainer:{
             height:"200px",
@@ -49,7 +54,10 @@ const useStyle=makeStyles(theme=>({
 
 const AddPost=(props)=>{
     const {openAddPost,setOpenAddPost}=props
-  
+    const [caption,setCaption]=  useState("")
+    const [image,setImage]=useState(null)
+    const [imageUrl,setImageUrl]=useState("")
+    const [progressBar,setProgressBar]=useState(0)
    const classes=useStyle()
 
     return(
@@ -62,13 +70,29 @@ const AddPost=(props)=>{
               <DialogContentText>
               <div className={classes.addPost__container}>
                   <div className={classes.addPost__imageContainer}>
-                    <AddIcon className={classes.addPost__addIcon} />
+                   
+                  {/*<label for="upload">  
+                        <span>
+                        <IconButton>
+                        <AddIcon className={classes.addPost__addIcon} />
+                        </IconButton></span>
+                    
+                    <input type="file"id="upload" name="choose" style={{display:"none"}}/>
+            </label>*/}
+                  <label for="upload">
+                    <span  className={classes.addPost__addIcon} aria-hidden="true">
+                       +
+                    </span>
+                <input type="file" id="upload" style={{displaye:"none"}} hidden/>
+                    </label>
+                  
+                  
                   </div>
-                  <TextField id="#" variant="standard" label="add caption" className={classes.addPost__textfield}/>
+                  <TextField  onChange={(e)=>setCaption(e.target.value)} variant="standard" label="add caption" className={classes.addPost__textfield}/>
               </div>
               </DialogContentText>
               <DialogActions>
-                <Button color="danger" variant="contained">cancel</Button>
+                <Button color="danger" variant="contained" onClick={()=>setOpenAddPost(!openAddPost)}>cancel</Button>
                 <Button color="primary" variant="contained"> post</Button>
               </DialogActions>
             </Dialog>
