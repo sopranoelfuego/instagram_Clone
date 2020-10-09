@@ -92,7 +92,7 @@ const [userName,setUserName]=useState("")
 const [password,setPassword]=useState("")
 const [openAddPost,setOpenAddPost]=useState(false)
 const [user,setUser]=useState(null)
-
+const [exemple,setExemple]=useState("")
 
 
 // this hooks help to track userActivity wether the user is logged 
@@ -167,13 +167,20 @@ console.log("OpenModalSignin value after update:",openModalSignin)
 
 
   }
-
+  //   var username
+  // user? username=user.displayName:console.log("user not found")
+   exemple?console.log("image url found",exemple):console.log("nada")
   return (
     <div className="root">
     <MenuBar setOpenModalSign={setOpenModalSign} setOpenModal={setOpenModal} openModalSignin={openModalSignin} user={user} setOpenAddPost={setOpenAddPost}/>
     <SignUpModal openSignUpModal={openSignupModal} setUserName={setUserName} setEmail={setEmail} setPassword={setPassword} signup={signup} setOpenModal={setOpenModal} classes={classes}/>
     <SignInModal openModalSignin={openModalSignin} setEmail={setEmail} setPassword={setPassword} signin={signin} setOpenModalSign={setOpenModalSign} classes={classes}/>
-    <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} />
+    {/**i make this to bind the crash with displayName
+       which need to be in condition if or to be destructuring
+ */}
+   { user? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:<Alert severity="info"
+   style={{position:"fixed",bottom:"80%",right:"0",zIndex:"1",width:"100%",marginBottom:"25px"}}>login first if you want to post of signup first</Alert>}
+    
     {/*posts*/}
        
       <div className="post__container">
@@ -190,6 +197,7 @@ console.log("OpenModalSignin value after update:",openModalSignin)
          
     
     </div>
+  
     </div> 
 
 
