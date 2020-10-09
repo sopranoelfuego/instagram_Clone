@@ -1,6 +1,7 @@
 import React from "react"
 import Button from "@material-ui/core/Button"
 import {auth} from  "../firebaseConfig"
+import  {Link} from "react-router-dom"
 
 const MenuBar=(props)=>{
     const {setOpenModal,setOpenModalSign,user,setOpenAddPost}=props
@@ -11,6 +12,7 @@ return (
       <div className="app__headerButton">
         {user?(
           <React.Fragment>
+          <Link to="/Profile"><Button color="success" onClick={()=>console.log("profile clicked")} style={{textDecoration:"none !important"}}>profile</Button></Link>
           <Button color="success" onClick={()=>setOpenAddPost(true)}>add post</Button>
           <Button  color="success" onClick={()=>auth.signOut()}>log out</Button>
 

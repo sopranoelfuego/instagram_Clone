@@ -52,7 +52,8 @@ const useStyle=makeStyles(theme=>(
             },
          post__avatar:{
             margin:theme.spacing(1),
-             zIndex:"-1"
+             zIndex:"-1",
+
          },
          post__username:{
              margingTop:"2px",
@@ -82,7 +83,7 @@ const classes=useStyle()
            {/* header post__header*/ }
            <div className={classes.post_headerContainer}>
                  <div className={classes.post__header}>
-                {avatar?<Avatar src={avatar} className={classes.post__avatar} />:<Skeleton variant="circle"><Avatar/></Skeleton>}
+                {avatar?<Avatar src={avatar} className={classes.post__avatar} />:<Avatar className={classes.post__avatar}>{username[0]}</Avatar>}
                 <p className={classes.post__username}>{username}</p> 
      
                 </div>
@@ -96,8 +97,7 @@ const classes=useStyle()
 
            {/*image post__image*/}
            {/*post caption*/}
-           {imageUrl?<img src={imageUrl} alt="A" className={classes.post__image} />:
-           <Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
+           {imageUrl?<img src={imageUrl} alt="A" className={classes.post__image} />:<Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
 
             {caption?<p className={classes.post__caption}>{caption}</p>:
            <Skeleton variant="text" width="100%"/>}

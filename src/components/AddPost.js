@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from "@material-ui/core/IconButton"
 import {storage,db} from "../firebaseConfig"
 import firebase from "firebase"
+import LinearProgress from "@material-ui/core/LinearProgress"
 
 
 const useStyle=makeStyles(theme=>({
@@ -72,13 +73,16 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
      const uplaodRef=storage.ref(`images/${image.name}`).put(image)
      uplaodRef.on("state_changed",snapShoot=>{
       //  then here we can update progressBar variable
+
       const progress=Math.round(
-        (snapShoot.bytesTransferred/snapShoot.totalBytes)*100
+        (snapShoot.bytesTransferred / snapShoot.totalBytes)*100
       )
       setProgressBar(progress)
 
+
      },
-    //  bundairing error catch them 
+    //  here i catch error and the as is not a friendly message i 
+    // console it hahah lol
      err=>console.log(err),
     //THIS CALLBACK FUNCTION BRIEF GET THE URL OF THE IMAGE FROM THE DATABASE THEN UPDATE THE POST
      ()=>{
@@ -112,7 +116,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
               <Dialog open={openAddPost} onClose={()=>setOpenAddPost(!openAddPost)} className="app__addPost">
               <DialogTitle>
                  <Alert severity="info">please press on the plus button to download the picture..</Alert>
-                 <progress value={progressBar} max="100" className={classes.progressBar}/>
+                {image? <LinearProgress  value={progressBar} max="100" variant="determinate" className={classes.progressBar}/>:null}
               </DialogTitle>
               <DialogContentText>
               <div className={classes.addPost__container}>

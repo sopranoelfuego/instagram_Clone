@@ -1,4 +1,5 @@
 import React ,{useState,useEffect}from 'react';
+import {Route,Switch} from "react-router-dom"
 import logo from './logo.svg';
 import Post from "./Post";
 import './App.css';
@@ -6,17 +7,13 @@ import radium from "radium"
 import Grid from "@material-ui/core/Grid"
 import {makeStyles} from '@material-ui/styles'
 import {db,auth} from "./firebaseConfig"
-import Dialog from "@material-ui/core/Dialog"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import DialogContText from "@material-ui/core/DialogContentText"
-import DialogActions from "@material-ui/core/DialogActions"
-import { TextField, Button, DialogContentText } from '@material-ui/core';
 import MenuBar from "./components/MenuBar"
 import SignUpModal from "./components/SignUpModal"
 import SignInModal from "./components/SigninModal"
 import Alert from  "@material-ui/lab/Alert"
 import AddPost from "./components/AddPost"
+import Profile from "./components/Profile"
+
 
 
 
@@ -121,9 +118,9 @@ useEffect(()=>{
 
   return ()=>unsubscribe()
 },[userName,user])
-// this hook help to get a snapshot of post collection in other to use it datas
+// this hook help to get a snapshot of post collection in other to use it data
 useEffect(() => {
-    db.collection("post").onSnapshot(snapshot => {
+    db.collection("post").orderBy("timestamp","desc").onSnapshot(snapshot => {
       snapshot.docs.map(doc => console.log("doc content ",doc))
       setPostes(snapshot.docs.map(doc =>
         ({
@@ -172,6 +169,14 @@ console.log("OpenModalSignin value after update:",openModalSignin)
    exemple?console.log("image url found",exemple):console.log("nada")
   return (
     <div className="root">
+
+    <Switch>
+      <Route exact path="/" component="App"/>
+      <Route path="/Profile" component="Profile" />
+    </Switch>
+
+
+
     <MenuBar setOpenModalSign={setOpenModalSign} setOpenModal={setOpenModal} openModalSignin={openModalSignin} user={user} setOpenAddPost={setOpenAddPost}/>
     <SignUpModal openSignUpModal={openSignupModal} setUserName={setUserName} setEmail={setEmail} setPassword={setPassword} signup={signup} setOpenModal={setOpenModal} classes={classes}/>
     <SignInModal openModalSignin={openModalSignin} setEmail={setEmail} setPassword={setPassword} signin={signin} setOpenModalSign={setOpenModalSign} classes={classes}/>
