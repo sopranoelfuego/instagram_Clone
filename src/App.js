@@ -1,7 +1,7 @@
 import React ,{useState,useEffect}from 'react';
 import {Route,Switch} from "react-router-dom"
 import logo from './logo.svg';
-import Post from "./Post";
+import Post from "./components/Post";
 import './App.css';
 import radium from "radium"
 import Grid from "@material-ui/core/Grid"
@@ -13,6 +13,7 @@ import SignInModal from "./components/SigninModal"
 import Alert from  "@material-ui/lab/Alert"
 import AddPost from "./components/AddPost"
 import Profile from "./components/Profile"
+import LandingPage from "./components/LandingPage"
 
 
 
@@ -118,19 +119,6 @@ useEffect(()=>{
 
   return ()=>unsubscribe()
 },[userName,user])
-// this hook help to get a snapshot of post collection in other to use it data
-useEffect(() => {
-    db.collection("post").orderBy("timestamp","desc").onSnapshot(snapshot => {
-      snapshot.docs.map(doc => console.log("doc content ",doc))
-      setPostes(snapshot.docs.map(doc =>
-        ({
-          id:doc.id,
-          post:doc.data()
-        })
-      ))
-
-    })
-}, [])
 
 // this is just a simple useEffect for debugging
 useEffect(()=>{
@@ -171,8 +159,8 @@ console.log("OpenModalSignin value after update:",openModalSignin)
     <div className="root">
 
     <Switch>
-      <Route exact path="/" component="App"/>
-      <Route path="/Profile" component="Profile" />
+      <Route exact path="/" component={LandingPage}/>
+      <Route path="/Profile" component={Profile} />
     </Switch>
 
 
@@ -187,21 +175,7 @@ console.log("OpenModalSignin value after update:",openModalSignin)
    style={{position:"fixed",bottom:"80%",right:"0",zIndex:"1",width:"100%",marginBottom:"25px"}}>login first if you want to post of signup first</Alert>}
     
     {/*posts*/}
-       
-      <div className="post__container">
-      <div className="post">
-           {postes.map(post =><Post key={post.id} id={post.id} post={post.post} />)}
-           
 
-         </div>
-         <div className="post__online">
-         <img src="/images/1.jpg" style={{width:"100%"}}/>
-         </div>
-
-      
-         
-    
-    </div>
   
     </div> 
 
