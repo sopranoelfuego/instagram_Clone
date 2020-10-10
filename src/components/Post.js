@@ -1,5 +1,9 @@
-import React from "react"
+import React,{useState,useEffect} from "react"
+import { Comment, Tooltip, Avatar } from 'antd';
+import moment from 'moment';
+import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import radium from "radium";
+import {db}from  "../firebaseConfig"
 import {makeStyles}from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import MoreVertIcon from  "@material-ui/icons/MoreVert"
@@ -21,6 +25,7 @@ const useStyle=makeStyles(theme=>(
             objectFit:"contain",
             float:"left",
             margin:"0",
+            marginBottom:"30px",
             ':hover':{
                 opacity:"1.0",
                 
@@ -60,9 +65,11 @@ const useStyle=makeStyles(theme=>(
              width:"100%"   
          },
          post__caption:{
-             padding:"10px",
-             margin:"10px",
-             width:"100%"
+             paddingTop:"40px",
+             margin:"30px",
+             width:"100%",
+            
+
 
              
          }
@@ -74,8 +81,22 @@ const Post=(props)=>{
     
 const {username,avatar,caption,imageUrl}=props.post
 const {id}=props.id
+const [comments,setComments]=useState([])
 const classes=useStyle()
+// this hook help to fetch comments from a specifique post 
+useEffect(() => {
+    let unsubscribe
+    if(id){
+        unsubscribe=db.collection("post").doc(id).collection("comments").onSnapshot(snapshot=>{
+            setComments(snapshot.docs.map(doc=>doc.data()))
+      
+         })
+    }
+    
+   return ()=>unsubscribe()
 
+
+}, [id])
     
     return (
         <div className={classes.root}>
@@ -99,7 +120,9 @@ const classes=useStyle()
            {/*post caption*/}
            {imageUrl?<img src={imageUrl} alt="A" className={classes.post__image} />:<Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
 
-            {caption?<p className={classes.post__caption}>{caption}</p>:
+            {caption?(
+                <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
+            ):
            <Skeleton variant="text" width="100%"/>}
         </div>
     )

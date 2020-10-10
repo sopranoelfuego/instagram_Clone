@@ -7,7 +7,7 @@
 
  .App {
 
-  background-color: cyan;
+
  width: 100%;
   max-width: 500px;
  
@@ -120,9 +120,11 @@
   }
   .post__container{
     padding: 0%;
+    padding-top:65px !important;
     margin: 0;
     max-width: 600px;
     align-self: center;
+    
 
 
   }
@@ -146,7 +148,6 @@
   }
    .App {
   
-    background-color: cyan;
    width: 100%;
 
    
