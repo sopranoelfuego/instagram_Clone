@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react"
-import { Comment, Tooltip, Avatar } from 'antd';
+import { Comment, Tooltip } from 'antd';
 import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import radium from "radium";
@@ -124,6 +124,9 @@ useEffect(() => {
                 <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
             ):
            <Skeleton variant="text" width="100%"/>}
+           {/** */}
+           <div></div>
+
         </div>
     )
 
