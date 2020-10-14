@@ -10,6 +10,7 @@ import MoreVertIcon from  "@material-ui/icons/MoreVert"
 import Skeleton from "@material-ui/lab/Skeleton"
 import IconButton from "@material-ui/core/IconButton"
 
+
 const useStyle=makeStyles(theme=>(
      {
          root:{
@@ -72,6 +73,11 @@ const useStyle=makeStyles(theme=>(
 
 
              
+         },
+         like_dislike_container:{
+             display:"flex",
+             flexDirection:"row",
+             justifyContent:"flex-start"
          }
 
 
@@ -82,6 +88,9 @@ const Post=(props)=>{
 const {username,avatar,caption,imageUrl}=props.post
 const {id}=props.id
 const [comments,setComments]=useState([])
+const [comment,setComment]=useState("")
+const [liked,setLikes]=useState(0)
+const [unliked,setUnliked]=useState(0)
 const classes=useStyle()
 // this hook help to fetch comments from a specifique post 
 useEffect(() => {
@@ -114,18 +123,29 @@ useEffect(() => {
                  </IconButton>
                 </div>
            </div>
-
-
+            <div>
+              
            {/*image post__image*/}
+          
+                <div>
+                {imageUrl?<img src={imageUrl} alt="A" className={classes.post__image} />:<Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
+            
+           
+                </div>
            {/*post caption*/}
-           {imageUrl?<img src={imageUrl} alt="A" className={classes.post__image} />:<Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
-
-            {caption?(
-                <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
-            ):
-           <Skeleton variant="text" width="100%"/>}
-           {/** */}
-           <div></div>
+                <div>
+                {caption?(
+                    <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
+                ):
+               <Skeleton variant="text" width="100%"/>}
+               
+                </div>
+          
+            </div>
+            {/** in this scope will contain coments */}
+           <div>
+               
+           </div>
 
         </div>
     )
