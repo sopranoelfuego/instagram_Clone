@@ -134,6 +134,10 @@ useEffect(() => {
                 </div>
            {/*post caption*/}
                 <div>
+            {/**like dislike block */}    
+                <div className={classes.like_dislike_container}>
+                
+                </div>
                 {caption?(
                     <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
                 ):
