@@ -148,7 +148,7 @@ useEffect(()=>{
     
     return ()=>docRef()
 
-},[])
+},[id])
     
     return (
         <div className={classes.root}>
