@@ -9,6 +9,7 @@ import Avatar from "@material-ui/core/Avatar"
 import MoreVertIcon from  "@material-ui/icons/MoreVert"
 import Skeleton from "@material-ui/lab/Skeleton"
 import IconButton from "@material-ui/core/IconButton"
+import Button from "@material-ui/core/Button"
 
 
 const useStyle=makeStyles(theme=>(
@@ -26,7 +27,7 @@ const useStyle=makeStyles(theme=>(
             objectFit:"contain",
             float:"left",
             margin:"0",
-            marginBottom:"30px",
+            marginBottom:"10px",
             ':hover':{
                 opacity:"1.0",
                 
@@ -66,7 +67,7 @@ const useStyle=makeStyles(theme=>(
              width:"100%"   
          },
          post__caption:{
-             paddingTop:"40px",
+
              margin:"30px",
              width:"100%",
             
@@ -75,9 +76,29 @@ const useStyle=makeStyles(theme=>(
              
          },
          like_dislike_container:{
+             padding:"0 0 0 20px",
+
              display:"flex",
              flexDirection:"row",
-             justifyContent:"flex-start"
+             justifyContent:"start",
+            
+         },
+         commentContainer:{
+             display:"flex",
+             borderTop:"1px solid #BDBDBD"
+         },
+         input:{
+             flex:"1",
+             paddingRight:"20px",
+             border:"none",
+             padding:"10px",
+             " :focus":{
+                 border:"none"
+             }
+         },
+         Button:{
+             flex:"0",
+             color:"#119CF6"
          }
 
 
@@ -85,11 +106,13 @@ const useStyle=makeStyles(theme=>(
 ))
 const Post=(props)=>{
     
-const {username,avatar,caption,imageUrl}=props.post
+const {username,avatar,caption,imageUrl,like,unlike}=props.post
 const {id}=props.id
 const [comments,setComments]=useState([])
 const [comment,setComment]=useState("")
 const [liked,setLikes]=useState(0)
+const [isLiked,setIsLiked]=useState(false)
+const [isUnliked,setIsUnliked]=useState(false)
 const [unliked,setUnliked]=useState(0)
 const classes=useStyle()
 // this hook help to fetch comments from a specifique post 
@@ -106,6 +129,26 @@ useEffect(() => {
 
 
 }, [id])
+// ACTION METHODES=======
+const handleLiked=()=>{
+    let likeOnce=db.collection("post").onSnapshot(snapshot =>{
+        console.log("this is a snapshot from firestore ",snapshot.docs.find(post=>post.id===id))
+    })
+
+}
+// this useEffect is for jst debuging 
+useEffect(()=>{
+    let docRef
+    if(id){
+        docRef=db.collection("post").doc(id)
+    docRef.get().then(doc=>{
+        doc.exists?console.log("data from firestore",doc.data()):console.log("data not found")
+    })
+    }
+    
+    return ()=>docRef()
+
+},[])
     
     return (
         <div className={classes.root}>
@@ -136,7 +179,10 @@ useEffect(() => {
                 <div>
             {/**like dislike block */}    
                 <div className={classes.like_dislike_container}>
-                
+                <LikeOutlined style={{ fontSize:"25px"}} />
+                 <p style={{paddingRight:"10px"}}>{like}</p>
+                <DislikeOutlined style={{fontSize:"25px"}}/>
+                <p>{unlike}</p>
                 </div>
                 {caption?(
                     <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
@@ -147,12 +193,20 @@ useEffect(() => {
           
             </div>
             {/** in this scope will contain coments */}
-           <div>
-               
+
+            <form>  
+           <div className={classes.commentContainer}>
+            {/**this scope  will contain input for comment*/}
+
+
+            <input onChange={(e)=>setComment(e.target.value)} placeholder="add comment..." className={classes.input}/>
+             <Button className={classes.Button}>post</Button> 
+
            </div>
+           </form>
 
         </div>
     )
 
 }
-export default radium(Post)
+export default Post
