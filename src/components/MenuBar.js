@@ -19,7 +19,7 @@ return (
           </React.Fragment>
         ):
         ( <React.Fragment>
-          <Button color="success" onClick={()=>setOpenModal}>sign up</Button>
+          <Button color="success" onClick={()=>setOpenModal(true)}>sign up</Button>
         <Button color="success" onClick={()=>setOpenModalSign(true)}>sign in</Button>
         </React.Fragment>
         )

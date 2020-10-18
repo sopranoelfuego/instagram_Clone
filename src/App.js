@@ -3,7 +3,6 @@ import {Route,Switch} from "react-router-dom"
 import logo from './logo.svg';
 import Post from "./components/Post";
 import './App.css';
-import radium from "radium"
 import Grid from "@material-ui/core/Grid"
 import {makeStyles} from '@material-ui/styles'
 import {db,auth} from "./firebaseConfig"
@@ -14,6 +13,7 @@ import Alert from  "@material-ui/lab/Alert"
 import AddPost from "./components/AddPost"
 import Profile from "./components/Profile"
 import LandingPage from "./components/LandingPage"
+import firebase from "firebase"
 
 
 
@@ -120,13 +120,6 @@ useEffect(()=>{
   return ()=>unsubscribe()
 },[userName,user])
 
-// this is just a simple useEffect for debugging
-useEffect(()=>{
-
-console.log("OpenModalSignin value after update:",openModalSignin)
-
-
-},[openModalSignin])
 
   // function which help to get data from the form then submit them
   const signup=(e)=>{
@@ -168,13 +161,13 @@ console.log("OpenModalSignin value after update:",openModalSignin)
     <MenuBar setOpenModalSign={setOpenModalSign} setOpenModal={setOpenModal} openModalSignin={openModalSignin} user={user} setOpenAddPost={setOpenAddPost}/>
     <SignUpModal openSignUpModal={openSignupModal} setUserName={setUserName} setEmail={setEmail} setPassword={setPassword} signup={signup} setOpenModal={setOpenModal} classes={classes}/>
     <SignInModal openModalSignin={openModalSignin} setEmail={setEmail} setPassword={setPassword} signin={signin} setOpenModalSign={setOpenModalSign} classes={classes}/>
+     
     {/**i make this to bind the crash with displayName
        which need to be in condition if or to be destructuring
  */}
    { user? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:<Alert severity="info"
    style={{position:"fixed",bottom:"80%",right:"0",zIndex:"1",width:"100%",marginBottom:"25px"}}>login first if you want to post of signup first</Alert>}
     
-    {/*posts*/}
 
   
     </div> 
@@ -183,13 +176,3 @@ console.log("OpenModalSignin value after update:",openModalSignin)
   )
 }
 export default App;
-{/** <div className="post">
-           {postes.map(post =><Post key={post.id} id={post.id} post={post.post} />)}
-
-         </div>
-         <div className="post__online">
-         <img src="/images/1.jpg" style={{width:"100%"}}/>
-         </div>
-         {body()}
-
-      */}

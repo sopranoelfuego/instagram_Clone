@@ -68,7 +68,7 @@ const useStyle=makeStyles(theme=>(
          },
          post__caption:{
 
-             margin:"30px",
+            padding:"5px 0 10px 24px",
              width:"100%",
             
 
@@ -106,14 +106,16 @@ const useStyle=makeStyles(theme=>(
 ))
 const Post=(props)=>{
     
-const {username,avatar,caption,imageUrl,like,unlike}=props.post
-const {id}=props.id
+const {username,avatar,caption,imageUrl,like,unlike}=props.post.post
+const {id}=props.post
+console.log("this is a id from Post",id)
 const [comments,setComments]=useState([])
 const [comment,setComment]=useState("")
-const [liked,setLikes]=useState(0)
+const[action,setAction]=useState(false)
+
 const [isLiked,setIsLiked]=useState(false)
 const [isUnliked,setIsUnliked]=useState(false)
-const [unliked,setUnliked]=useState(0)
+
 const classes=useStyle()
 // this hook help to fetch comments from a specifique post 
 useEffect(() => {
@@ -124,31 +126,49 @@ useEffect(() => {
       
          })
     }
+
     
    return ()=>unsubscribe()
 
 
 }, [id])
+
 // ACTION METHODES=======
 const handleLiked=()=>{
-    let likeOnce=db.collection("post").onSnapshot(snapshot =>{
-        console.log("this is a snapshot from firestore ",snapshot.docs.find(post=>post.id===id))
+    let newLike=like
+    newLike++
+ if(id){
+     console.log("here handleliked is clicked")
+    db.collection("post").doc(id).update({
+        like:newLike
+    })
+    setIsLiked(true)
+    setAction(!action)
+    
+ }
+
+}
+const handleUnliked=()=>{
+    let newUnLike=unlike
+    newUnLike++
+    if(id){
+        db.collection("post").doc(id).update({unlike:newUnLike})
+    }
+
+    setIsUnliked(true)
+    setAction(!action)
+}
+
+
+const postComment=(e)=>{
+    e.preventDefault()
+    let unsubscribe
+    db.collection("post").doc(id).set({
+       username:"" ,
+       text:""
     })
 
 }
-// this useEffect is for jst debuging 
-useEffect(()=>{
-    let docRef
-    if(id){
-        docRef=db.collection("post").doc(id)
-    docRef.get().then(doc=>{
-        doc.exists?console.log("data from firestore",doc.data()):console.log("data not found")
-    })
-    }
-    
-    return ()=>docRef()
-
-},[id])
     
     return (
         <div className={classes.root}>
@@ -179,13 +199,34 @@ useEffect(()=>{
                 <div>
             {/**like dislike block */}    
                 <div className={classes.like_dislike_container}>
-                <LikeOutlined style={{ fontSize:"25px"}} />
-                 <p style={{paddingRight:"10px"}}>{like}</p>
-                <DislikeOutlined style={{fontSize:"25px"}}/>
-                <p>{unlike}</p>
+            {
+
+                action?(
+                    <IconButton  className="likeButton" onClick={handleLiked} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
+            <LikeOutlined  />{like}
+            </IconButton>
+                ):(<IconButton  className="likeButton" onClick={handleLiked}  color={isLiked?"primary":"default"}>
+                <LikeOutlined  />{like}
+                </IconButton>)
+            }
+
+            {
+                action?(
+                    <IconButton   className="unLikeButton" onClick={handleUnliked} disabled color={isUnliked?"danger":"default"}>
+                    <DislikeOutlined />{unlike}
+                </IconButton>
+
+    
+                ):(
+                    <IconButton   className="unLikeButton" onClick={handleUnliked} color={isUnliked?"danger":"default"}>
+                    <DislikeOutlined />{unlike}
+                </IconButton>
+    
+                )
+            }
                 </div>
                 {caption?(
-                    <div className={classes.post__caption}><p>{username}:<small>{caption}</small></p></div>
+                    <div className={classes.post__caption}><p><small style={{fontWeight:"bold",fontSize:"15px"}}>{username}</small> <small>{caption}</small></p></div>
                 ):
                <Skeleton variant="text" width="100%"/>}
                
@@ -207,6 +248,6 @@ useEffect(()=>{
 
         </div>
     )
-
+                
 }
 export default Post

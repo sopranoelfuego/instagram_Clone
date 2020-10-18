@@ -134,6 +134,13 @@
     padding-right:10px ;
     box-sizing: border-box;
   }
+  .likeButton{
+    font-size: 16px !important;
+
+  }
+  .unLikeButton {
+    font-size: 16px !important;
+  }
 
 }
 
@@ -174,6 +181,7 @@
   .app__headerButton {
    
       padding-top: 20px;
+    
       
       
   }
@@ -225,6 +233,13 @@
     padding-left: 10px;
     top: 40%;
 
+  }
+  .likeButton{
+    font-size: 20px !important;
+
+  }
+  .unLikeButton {
+    font-size: 20px !important;
   }
 
 }
