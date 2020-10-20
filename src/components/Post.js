@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react"
 import { Comment, Tooltip } from 'antd';
 import moment from 'moment';
-import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, ConsoleSqlOutlined } from '@ant-design/icons';
 import radium from "radium";
 import {db}from  "../firebaseConfig"
 import {makeStyles}from "@material-ui/core/styles"
@@ -10,6 +10,9 @@ import MoreVertIcon from  "@material-ui/icons/MoreVert"
 import Skeleton from "@material-ui/lab/Skeleton"
 import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
+import {auth} from "../firebaseConfig"
+import Alert from "@material-ui/lab/Alert"
+
 
 
 const useStyle=makeStyles(theme=>(
@@ -108,10 +111,12 @@ const Post=(props)=>{
     
 const {username,avatar,caption,imageUrl,like,unlike}=props.post.post
 const {id}=props.post
-console.log("this is a id from Post",id)
+const [user,setUser]=useState(null)
+
 const [comments,setComments]=useState([])
 const [comment,setComment]=useState("")
 const[action,setAction]=useState(false)
+const [userLogged,setUserLogged]=useState(false)
 
 const [isLiked,setIsLiked]=useState(false)
 const [isUnliked,setIsUnliked]=useState(false)
@@ -132,11 +137,25 @@ useEffect(() => {
 
 
 }, [id])
+// THIS HOOKS HELP  TO GET THE CURRENT USER
+useEffect(()=>{
+    let user=auth.currentUser
+   
+    if(user){
+        setUser(user)
+    }else{
+       console.log("current user",user)
+    }
+
+},[])
 
 // ACTION METHODES=======
 const handleLiked=()=>{
+    
     let newLike=like
+
     newLike++
+    
  if(id){
      console.log("here handleliked is clicked")
     db.collection("post").doc(id).update({
@@ -147,6 +166,16 @@ const handleLiked=()=>{
     
  }
 
+}
+// THIS METHODE HELP TO ACTIVATE THE ALERT WICH SHOW THE USER IS NOT LOGGED
+const activate=()=>{
+    setUserLogged(!userLogged)
+    console.log("user is not logged from activate methode",userLogged)
+    setTimeout(()=>{
+         console.log("3 secs passe here ...")
+       setUserLogged(!userLogged)
+       console.log("value of userLogged from active method")
+    },3000)
 }
 const handleUnliked=()=>{
     let newUnLike=unlike
@@ -202,10 +231,10 @@ const postComment=(e)=>{
             {
 
                 action?(
-                    <IconButton  className="likeButton" onClick={handleLiked} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
+                    <IconButton  className="likeButton" onClick={user==!null?handleLiked:activate} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
             <LikeOutlined  />{like}
             </IconButton>
-                ):(<IconButton  className="likeButton" onClick={handleLiked}  color={isLiked?"primary":"default"}>
+                ):(<IconButton  className="likeButton" onClick={user==!null?handleLiked:activate}  color={isLiked?"primary":"default"}>
                 <LikeOutlined  />{like}
                 </IconButton>)
             }
@@ -234,7 +263,7 @@ const postComment=(e)=>{
           
             </div>
             {/** in this scope will contain coments */}
-
+               {userLogged?(<Alert severity="error" >you must log in to like a post...</Alert>):null}      
             <form>  
            <div className={classes.commentContainer}>
             {/**this scope  will contain input for comment*/}

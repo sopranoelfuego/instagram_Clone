@@ -165,8 +165,7 @@ useEffect(()=>{
     {/**i make this to bind the crash with displayName
        which need to be in condition if or to be destructuring
  */}
-   { user? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:<Alert severity="info"
-   style={{position:"fixed",bottom:"80%",right:"0",zIndex:"1",width:"100%",marginBottom:"25px"}}>login first if you want to post of signup first</Alert>}
+   { user? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:null}
     
 
   
