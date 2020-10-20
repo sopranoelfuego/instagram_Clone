@@ -12,6 +12,8 @@ import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import {auth} from "../firebaseConfig"
 import Alert from "@material-ui/lab/Alert"
+import firebase from "firebase"
+
 
 
 
@@ -21,6 +23,8 @@ const useStyle=makeStyles(theme=>(
             width:"100%",
             border:"1px solid lightgray",
             marginBottom:"45px",
+            borderSizing:"border-box"
+
             
          },
          post__image:{
@@ -143,6 +147,7 @@ useEffect(()=>{
    
     if(user){
         setUser(user)
+        console.log("the current user is ",user)
     }else{
        console.log("current user",user)
     }
@@ -174,9 +179,17 @@ const activate=()=>{
     setTimeout(()=>{
          console.log("3 secs passe here ...")
        setUserLogged(!userLogged)
-       console.log("value of userLogged from active method")
+       console.log("value of userLogged from active method",userLogged)
     },3000)
 }
+// THIS HOOK HELP TO DISPLAY ALERT OF REMINDING TO LOGGIN OR CREATE AN ACCOUN
+const displayUserLoggedAlert=()=>setUserLogged(userLogged)
+useEffect(()=>{
+    displayUserLoggedAlert()
+    console.log("value of userLogged from useEffect",userLogged)
+
+},[userLogged])
+
 const handleUnliked=()=>{
     let newUnLike=unlike
     newUnLike++
@@ -191,12 +204,18 @@ const handleUnliked=()=>{
 
 const postComment=(e)=>{
     e.preventDefault()
-    let unsubscribe
-    db.collection("post").doc(id).set({
-       username:"" ,
-       text:""
-    })
+    
+    if(user.displayName){
+        db.collection("post").doc(id).collection("comments").add({
+            createdAt:moment().format("MMM Do YY") ,
+            username:user.displayName,
+            text:comment
+        })
+        console.log("post posted...")
+        setComment("")
+    }else console.log("error user..")
 
+ 
 }
     
     return (
@@ -231,10 +250,10 @@ const postComment=(e)=>{
             {
 
                 action?(
-                    <IconButton  className="likeButton" onClick={user==!null?handleLiked:activate} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
+                    <IconButton  className="likeButton" onClick={user?handleLiked:activate} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
             <LikeOutlined  />{like}
             </IconButton>
-                ):(<IconButton  className="likeButton" onClick={user==!null?handleLiked:activate}  color={isLiked?"primary":"default"}>
+                ):(<IconButton  className="likeButton" onClick={user?handleLiked:activate}  color={isLiked?"primary":"default"}>
                 <LikeOutlined  />{like}
                 </IconButton>)
             }
@@ -269,8 +288,8 @@ const postComment=(e)=>{
             {/**this scope  will contain input for comment*/}
 
 
-            <input onChange={(e)=>setComment(e.target.value)} placeholder="add comment..." className={classes.input}/>
-             <Button className={classes.Button}>post</Button> 
+            <input onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="add comment..." className={classes.input}/>
+             <Button className={classes.Button} onClick={postComment}>post</Button> 
 
            </div>
            </form>

@@ -91,12 +91,15 @@
   *{
     align-items: center;
     max-width: 600px;
+    box-sizing: border-box;
   }
   .root{
     width: 100%;
     margin: 0;
     padding: 0;
     align-items: center;
+
+    box-sizing: border-box;
 
   }
   .post__online{
@@ -124,7 +127,7 @@
     margin: 0;
     max-width: 600px;
     align-self: center;
-    
+    box-sizing: border-box;
 
 
   }
@@ -193,7 +196,6 @@
     /* left: 0;
     right: 50px; */
     margin-top: 30px;
-    padding-left: 100px !important;
 
     top: 100px; 
     bottom: 30px;
@@ -210,7 +212,6 @@
    
     margin:5px 0 0 0;
 
-    padding:5px
   
   }
   .post{
@@ -220,8 +221,10 @@
      
      width: 60%;
      height: 650px;
-     /* background-color: darkgreen; */
-     padding-top: 80px;
+     padding:0;
+     margin:0;
+    
+
 
   
   }
