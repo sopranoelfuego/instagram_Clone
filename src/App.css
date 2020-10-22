@@ -122,6 +122,7 @@
     justify-content: space-evenly;
   }
   .post__container{
+    background-color: darkgoldenrod;
     padding: 0%;
     padding-top:65px !important;
     margin: 0;
@@ -152,7 +153,7 @@
   * {
     margin:0;
     padding: 0;
-  
+
     box-sizing: border-box;
   
   }
@@ -160,6 +161,143 @@
   
    width: 100%;
 
+   
+  }
+  .app__header {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 70px;
+    flex-direction: row;
+    background-color:white;
+    border-bottom: 1px solid lightgray;
+    justify-content: space-around;
+    box-sizing: border-box;
+    
+    background-color: darkblue;
+    
+    top: 0;
+  
+    
+    
+   
+  }
+  .app__headerButton {
+   
+      padding-top: 20px;
+    
+      
+      
+  }
+  .post__container {
+    
+   background-color: darkmagenta;
+    width: 100%;
+    height: 100%;
+    /* left: 0;
+    right: 50px; */
+    margin-top: 30px;
+
+    top: 100px; 
+    bottom: 30px;
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+
+   padding: 0;
+   align-items: center;
+   
+  
+  
+  }
+  .root{   
+   
+    margin:5px 0 0 0;
+
+  
+  }
+  .post{
+  
+  
+      /* overflow-x: hidden; */
+
+     width: 100%;
+     height: 650px;
+     padding:0;
+     margin:0;
+     padding-top: 50px !important;
+
+    
+
+
+  
+  }
+  .post__online{
+
+    display: none;
+  }
+  .likeButton{
+    font-size: 20px !important;
+
+  }
+  .unLikeButton {
+    font-size: 20px !important;
+  }
+
+}
+@media  screen and (min-width: 768px){
+  .post__container{
+    background-color: yellow;
+    padding: 0 0 0 10px;
+    padding-top:20px !important;
+    margin: 0;
+    max-width: 600px;
+    align-self: center;
+    box-sizing: border-box;
+    
+  }
+  .post{
+  
+  
+    /* overflow-x: hidden; */
+
+   width: 80%;
+   height: 650px;
+   padding:0;
+   margin:0;
+
+
+  
+}
+.post__online{
+  display: block;
+  position: fixed;
+ background-color: green;
+  width: 40%;
+  right: 4px;
+  padding-left: 10px;
+  margin: 0;
+  padding: 0;
+  top: 40%;
+
+}
+}
+
+@media screen and (min-width :992px){
+
+  * {
+    margin:0;
+  
+    box-sizing: border-box;
+  
+  }
+  
+   .App {
+  
+  
+   width: 100%;
+    max-width: 500px;
    
   }
   .app__header {
@@ -184,65 +322,59 @@
   .app__headerButton {
    
       padding-top: 20px;
-    
       
       
   }
   .post__container {
     
-
-    width: 100%;
+  
+    width: 60%;
     height: 100%;
-    /* left: 0;
-    right: 50px; */
-    margin-top: 30px;
-
-    top: 100px; 
+    left: 0;
+    right: 50px;
+    top: 100px;
     bottom: 30px;
     box-sizing: border-box;
-    margin: 0;
+    margin: 0px 70px 0 80px;
     display: flex;
     flex-direction: row;
-
-   padding: 0;
+    padding: 50px 40px 12px 40px;
   
   
   }
   .root{   
    
     margin:5px 0 0 0;
-
+    max-width:1240px;
+    padding:5px
   
   }
   .post{
   
   
       /* overflow-x: hidden; */
-     
-     width: 60%;
+     width: 100%;
      height: 650px;
-     padding:0;
-     margin:0;
     
-
-
   
   }
   .post__online{
     position: fixed;
+    
   
     width: 40%;
     right: 4px;
     padding-left: 10px;
-    top: 40%;
-
+    top: 20%;
+    padding-right: 80px;
+    margin-right: 50px;
   }
-  .likeButton{
-    font-size: 20px !important;
-
+  .app__addPost{
+  
+    padding-left:20px ;
+    padding-right:20px ;
+    box-sizing: border-box;
   }
-  .unLikeButton {
-    font-size: 20px !important;
-  }
+  
 
 }

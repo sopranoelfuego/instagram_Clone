@@ -201,7 +201,7 @@ const handleUnliked=()=>{
     setAction(!action)
 }
 
-
+console.log("this is the variable of moment",moment().format("MMM Do YY"))
 const postComment=(e)=>{
     e.preventDefault()
     
@@ -286,7 +286,7 @@ const postComment=(e)=>{
             <form>  
            <div className={classes.commentContainer}>
             {/**this scope  will contain input for comment*/}
-
+             
 
             <input onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="add comment..." className={classes.input}/>
              <Button className={classes.Button} onClick={postComment}>post</Button> 

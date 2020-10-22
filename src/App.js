@@ -134,15 +134,14 @@ useEffect(()=>{
     setOpenModal(false)
   }
   const signin=(e)=>{
+    
 
    e.preventDefault()
    auth.signInWithEmailAndPassword(email,password).then(authuser => 
-    <Alert severity="success" >welcome {authuser.displayName}...</Alert>)
+      <Alert severity="success" >welcom {authuser.displayName}...</Alert>)
    .catch(err => <Alert severity="error">{err.message}</Alert> )
 
    setOpenModalSign(false)
-  
-
 
   }
   //   var username
@@ -150,6 +149,7 @@ useEffect(()=>{
    exemple?console.log("image url found",exemple):console.log("nada")
   return (
     <div className="root">
+
 
     <Switch>
       <Route exact path="/" component={LandingPage}/>
