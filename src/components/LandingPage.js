@@ -1,6 +1,21 @@
 import React,{useState,useEffect} from 'react'
 import Post from "../components/Post"
 import {db,auth} from "../firebaseConfig"
+import {makeStyles} from "@material-ui/styles"
+
+import { Row, Col } from 'antd';
+const useStyle=makeStyles(theme=>({
+    root:{
+        boxSizing:"border-box",
+
+    },
+    post:{
+        width:"100%",
+        
+    }
+
+
+}))
 
 const LandingPage=()=> {
    
@@ -56,3 +71,25 @@ useEffect(()=>{
     )
 }
 export default LandingPage
+
+
+
+/* 
+<div>
+            
+             
+            <div className="post__container">
+            <div className="post">
+                {postes?postes.map(post =><Post key={post.id} currentUser={user} post={post} />):<h2>cannot display postes</h2>}
+                
+
+                </div>
+                <div className="post__online">
+                <img src="/images/1.jpg" style={{width:"100%"}}/>
+                </div>
+
+            
+                
+            
+            </div>
+        </div>*/

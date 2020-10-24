@@ -129,18 +129,23 @@ const classes=useStyle()
 // this hook help to fetch comments from a specifique post 
 useEffect(() => {
     let unsubscribe
-    if(id){
+    
         unsubscribe=db.collection("post").doc(id).collection("comments").onSnapshot(snapshot=>{
-            setComments(snapshot.docs.map(doc=>doc.data()))
+            // setComments(snapshot.docs.map(doc=>({
+            //     id:doc.id,
+            //     comment:doc.data()
+            // })))
+ snapshot.docs.map(comment => console.log("comments found from firestore",comment.data()))
+
       
          })
-    }
+    
 
     
    return ()=>unsubscribe()
 
 
-}, [id])
+})
 // THIS HOOKS HELP  TO GET THE CURRENT USER
 useEffect(()=>{
     let user=auth.currentUser
@@ -284,10 +289,16 @@ const postComment=(e)=>{
             {/** in this scope will contain coments */}
                {userLogged?(<Alert severity="error" >you must log in to like a post...</Alert>):null}      
             <form>  
+             
+            <div >
+             {comments.map(comment =><p><strong>{comment.username}this is comment yeah</strong> {comment.text}</p>
+                 
+             )}
+            
+            </div>
            <div className={classes.commentContainer}>
             {/**this scope  will contain input for comment*/}
-             
-
+            
             <input onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="add comment..." className={classes.input}/>
              <Button className={classes.Button} onClick={postComment}>post</Button> 
 
