@@ -88,7 +88,15 @@
 }
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width:600px){
+  .root{   
+    margin: 0;
+    padding: 0;
+ 
+   
+   }
   *{
+    margin: 0;
+    padding: 0;
     align-items: center;
     max-width: 600px;
     box-sizing: border-box;
@@ -152,6 +160,12 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media screen and (min-width:600px){
+  .root{   
+   margin: 0;
+   padding: 0;
+
+  
+  }
   * {
     margin:0;
     padding: 0;
@@ -191,7 +205,6 @@
       
   }
   .post__container {
-    
 
     width: 100%;
     height: 100%;
@@ -203,8 +216,9 @@
     bottom: 30px;
     box-sizing: border-box;
     margin: 0;
-    display: flex;
-    flex-direction: row;
+
+    object-fit: contain;
+
 
    padding: 0;
    align-items: center;
@@ -212,22 +226,19 @@
   
   
   }
-  .root{   
-   
-    margin:5px 0 0 0;
-
   
-  }
   .post{
   
   
       /* overflow-x: hidden; */
-
+      
      width: 100%;
      height: 650px;
      padding:0;
      margin:0;
      padding-top: 50px !important;
+    
+     
 
     
 
@@ -248,6 +259,10 @@
 
 }
 @media  screen and (min-width: 768px){
+  .root{
+    margin: 0;
+    padding: 0;
+  }
   .post__container{
 
     padding: 0 0 0 10px;

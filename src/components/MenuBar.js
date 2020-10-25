@@ -8,13 +8,13 @@ const MenuBar=(props)=>{
     
 return (
     <div className="app__header">
-      <Link to="/">
+      <Link to="/" style={{textDecoration:"none"}}>
           <h4 style={{paddingTop:"20px",color:"GrayText"}}>ISoprano</h4>
       </Link>
       <div className="app__headerButton">
         {user?(
           <React.Fragment>
-          <Link to="/Profile"><Button color="success" style={{textDecoration:"none !important"}}>profile</Button></Link>
+          <Link to="/Profile" style={{textDecoration:"none"}}><Button color="success" style={{textDecoration:"none !important"}}>profile</Button></Link>
           <Button color="success" onClick={()=>setOpenAddPost(true)}>add post</Button>
           <Button  color="success" onClick={()=>auth.signOut()}>log out</Button>
 

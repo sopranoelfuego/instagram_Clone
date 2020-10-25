@@ -93,6 +93,7 @@ const [user,setUser]=useState(null)
 const [exemple,setExemple]=useState("")
 
 
+
 // this hooks help to track userActivity wether the user is logged 
 // or not then fires the event or keep trackin him
 useEffect(()=>{

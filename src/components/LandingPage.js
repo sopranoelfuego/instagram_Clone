@@ -3,6 +3,7 @@ import Post from "../components/Post"
 import {db,auth} from "../firebaseConfig"
 import {makeStyles} from "@material-ui/styles"
 
+
 import { Row, Col } from 'antd';
 const useStyle=makeStyles(theme=>({
     root:{
@@ -21,6 +22,8 @@ const LandingPage=()=> {
    
 
     const [user,setUser]=useState(null)
+    const [openDeletePost,setOpenDeletePost]=useState(false)
+    const [openPostDialog,setOpenPostDialog]=useState(false)
     // THIS HOOKS HELP  TO GET THE CURRENT USER
 useEffect(()=>{
     let user=auth.currentUser
@@ -55,7 +58,14 @@ useEffect(()=>{
              
             <div className="post__container">
             <div className="post">
-                {postes?postes.map(post =><Post key={post.id} currentUser={user} post={post} />):<h2>cannot display postes</h2>}
+                {postes?postes.map(post =><Post key={post.id}
+                     currentUser={user} 
+                     post={post} 
+                     openDeletePost={openDeletePost}
+                      setOpenDeletePost={setOpenDeletePost}
+                      openPostDialog={openPostDialog} 
+                      setOpenPostDialog={setOpenPostDialog}
+                      />):<h2>cannot display postes</h2>}
                 
 
                 </div>

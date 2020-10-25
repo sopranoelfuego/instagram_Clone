@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import {auth} from "../firebaseConfig"
 import Alert from "@material-ui/lab/Alert"
+import  DialogModal from "./DialogComponent"
 
 
 
@@ -23,7 +24,7 @@ const useStyle=makeStyles(theme=>(
             width:"100%",
             border:"1px solid lightgray",
             marginBottom:"45px",
-            borderSizing:"border-box"
+            borderSizing:"border-box",
 
             
          },
@@ -115,6 +116,9 @@ const Post=(props)=>{
     
 const {username,avatar,caption,imageUrl,like,unlike}=props.post.post
 const {id}=props.post
+const {openDeletePost,setOpenDeletePost,openPostDialog,setOpenPostDialog}=props
+
+
 const [user,setUser]=useState(null)
 
 const [comments,setComments]=useState([])
@@ -238,18 +242,18 @@ const postComment=(e)=>{
     
     return (
         <div className={classes.root}>
-
-           {/* header post__header*/ }
+            <DialogModal openPostDialog={openPostDialog} setOpenDialog={setOpenPostDialog} id={id}/>
+           {/* header post__header*/ } 
            <div className={classes.post_headerContainer}>
                  <div className={classes.post__header}>
                 {avatar?<Avatar src={avatar} className={classes.post__avatar} />:<Avatar className={classes.post__avatar}>{username[0]}</Avatar>}
                 <p className={classes.post__username}>{username}</p> 
      
                 </div>
-                <div className={classes.MoreVertIcon}>
-                <IconButton aria-label="settings">
-                <MoreVertIcon />
-                 </IconButton>
+                <div className={classes.MoreVertIcon} >
+                <Button  onClick={()=>console.log("am clicked")}  aria-label="upload picture" component="span">
+                <MoreVertIcon  />
+                 </Button>
                 </div>
            </div>
             <div>
