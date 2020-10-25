@@ -8,7 +8,9 @@ const MenuBar=(props)=>{
     
 return (
     <div className="app__header">
-      <h4 style={{paddingTop:"20px",color:"GrayText"}}>ISoprano</h4>
+      <Link to="/">
+          <h4 style={{paddingTop:"20px",color:"GrayText"}}>ISoprano</h4>
+      </Link>
       <div className="app__headerButton">
         {user?(
           <React.Fragment>

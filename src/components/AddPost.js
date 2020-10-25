@@ -93,7 +93,9 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
             timestamp:firebase.firestore.FieldValue.serverTimestamp(),
             caption:caption,
             imageUrl:url,
-            username:username
+            username:username,
+            like:0,
+            unlike:0,
 
 
 

@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from "react"
+import firebase from "firebase"
 import { Comment, Tooltip } from 'antd';
 import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, ConsoleSqlOutlined } from '@ant-design/icons';
@@ -12,7 +13,6 @@ import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import {auth} from "../firebaseConfig"
 import Alert from "@material-ui/lab/Alert"
-import firebase from "firebase"
 
 
 
@@ -130,34 +130,46 @@ const classes=useStyle()
 useEffect(() => {
     let unsubscribe
     
-        unsubscribe=db.collection("post").doc(id).collection("comments").onSnapshot(snapshot=>{
-            // setComments(snapshot.docs.map(doc=>({
-            //     id:doc.id,
-            //     comment:doc.data()
-            // })))
- snapshot.docs.map(comment => console.log("comments found from firestore",comment.data()))
-
-      
-         })
-    
-
-    
-   return ()=>unsubscribe()
+ if(id){
+    unsubscribe=db.collection("post").doc(id).collection("comments").orderBy("createdAt").onSnapshot(snapshot=>{
+        setComments(snapshot.docs.map(doc=>({
+            id:doc.id,
+            comment:doc.data()
+        })))
 
 
-})
+  
+     })
+  }    
+    return ()=>unsubscribe()
+},[id])
 // THIS HOOKS HELP  TO GET THE CURRENT USER
 useEffect(()=>{
     let user=auth.currentUser
    
     if(user){
         setUser(user)
-        console.log("the current user is ",user)
+        setUserLogged(false)
+        setAction(false)
     }else{
        console.log("current user",user)
     }
 
 },[])
+// LISTEN TO THE USER CHANGE AUTHENTIFICATION
+useEffect(()=>{
+    let unsubscribe
+
+    unsubscribe=auth.onAuthStateChanged( user=>{
+        if(user){
+            setUser(user)
+            // setAction(!action)
+            setUserLogged(false)
+        }
+    }
+
+    )
+},[isLiked,isUnliked])
 
 // ACTION METHODES=======
 const handleLiked=()=>{
@@ -187,13 +199,13 @@ const activate=()=>{
        console.log("value of userLogged from active method",userLogged)
     },3000)
 }
-// THIS HOOK HELP TO DISPLAY ALERT OF REMINDING TO LOGGIN OR CREATE AN ACCOUN
+// THIS HOOK HELP TO DISPLAY ALERT OF REMINDING TO LOGGIN OR CREATE AN ACCOUNT
 const displayUserLoggedAlert=()=>setUserLogged(userLogged)
 useEffect(()=>{
     displayUserLoggedAlert()
     console.log("value of userLogged from useEffect",userLogged)
 
-},[userLogged])
+},[isLiked,isUnliked,comment])
 
 const handleUnliked=()=>{
     let newUnLike=unlike
@@ -206,13 +218,14 @@ const handleUnliked=()=>{
     setAction(!action)
 }
 
-console.log("this is the variable of moment",moment().format("MMM Do YY"))
+
 const postComment=(e)=>{
     e.preventDefault()
-    
+     
+
     if(user.displayName){
         db.collection("post").doc(id).collection("comments").add({
-            createdAt:moment().format("MMM Do YY") ,
+            createdAt:firebase.firestore.FieldValue.serverTimestamp() ,
             username:user.displayName,
             text:comment
         })
@@ -289,20 +302,26 @@ const postComment=(e)=>{
             {/** in this scope will contain coments */}
                {userLogged?(<Alert severity="error" >you must log in to like a post...</Alert>):null}      
             <form>  
-             
-            <div >
-             {comments.map(comment =><p><strong>{comment.username}this is comment yeah</strong> {comment.text}</p>
-                 
-             )}
+              {/**this scope  will contain input for comment*/}
+            <div style={{paddingBottom:"10px"}}>
+             {comments.map(comment =><p style={{paddingLeft:"30px",fontSize:"15px"}} ><strong>{comment.comment.username}</strong> {comment.comment.text}</p>)}
             
             </div>
-           <div className={classes.commentContainer}>
-            {/**this scope  will contain input for comment*/}
+           {user?(<div className={classes.commentContainer}>
+           
             
             <input onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="add comment..." className={classes.input}/>
              <Button className={classes.Button} onClick={postComment}>post</Button> 
 
            </div>
+           ):(<div className={classes.commentContainer}>
+           
+            
+           <input onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="add comment..." className={classes.input} disabled/>
+            <Button disabled className={classes.Button} onClick={postComment}>post</Button> 
+
+          </div>)
+          }
            </form>
 
         </div>
