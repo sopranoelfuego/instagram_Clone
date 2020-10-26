@@ -179,20 +179,38 @@ useEffect(()=>{
 const handleLiked=()=>{
     
     let newLike=like
-
     newLike++
-    
- if(id){
-     console.log("here handleliked is clicked")
-    db.collection("post").doc(id).update({
-        like:newLike
-    })
-    setIsLiked(true)
-    setAction(!action)
-    
- }
+    let data
+    db.collection("post").doc(id).get().then(
+     doc=>data=doc.data()
+    ).catch(error => console.log("error fetching data from document is not satisfied",error))
+
+    // like:0,
+    // likedBy:[]
+            
+    if(id){
+
+        db.collection("post").doc(id).update({
+            like:newLike,
+            likedBy:[...user.displayName,data.likedBy]
+        })
+        setIsLiked(true)
+        setAction(!action)
+        
+    }
 
 }
+const handleUnliked=()=>{
+    let newUnLike=unlike
+    newUnLike++
+    if(id){
+        db.collection("post").doc(id).update({unlike:newUnLike})
+    }
+
+    setIsUnliked(true)
+    setAction(!action)
+}
+
 // THIS METHODE HELP TO ACTIVATE THE ALERT WICH SHOW THE USER IS NOT LOGGED
 const activate=()=>{
     setUserLogged(!userLogged)
@@ -211,16 +229,6 @@ useEffect(()=>{
 
 },[isLiked,isUnliked,comment])
 
-const handleUnliked=()=>{
-    let newUnLike=unlike
-    newUnLike++
-    if(id){
-        db.collection("post").doc(id).update({unlike:newUnLike})
-    }
-
-    setIsUnliked(true)
-    setAction(!action)
-}
 
 
 const postComment=(e)=>{
@@ -235,7 +243,7 @@ const postComment=(e)=>{
         })
         console.log("post posted...")
         setComment("")
-    }else console.log("error user..")
+    }else console.log("error user post not posted..")
 
  
 }
@@ -251,9 +259,9 @@ const postComment=(e)=>{
      
                 </div>
                 <div className={classes.MoreVertIcon} >
-                <Button  onClick={()=>console.log("am clicked")}  aria-label="upload picture" component="span">
+                <IconButton onClick={()=>console.log("am clicked")}  aria-label="upload picture" component="span">
                 <MoreVertIcon  />
-                 </Button>
+                 </IconButton>
                 </div>
            </div>
             <div>
@@ -261,7 +269,7 @@ const postComment=(e)=>{
            {/*image post__image*/}
           
                 <div>
-                {imageUrl?<img src={imageUrl} alt="A" className={classes.post__image} />:<Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
+                {imageUrl?<img onDoubleClick={user?handleLiked:activate} src={imageUrl} alt="A" className={classes.post__image} />:<Skeleton animation="wave" variant="rect" width="100%" height="100%"/> }
             
            
                 </div>
