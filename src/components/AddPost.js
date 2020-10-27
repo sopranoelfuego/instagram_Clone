@@ -95,11 +95,8 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
             imageUrl:url,
             username:username,
             like:0,
-            likedBy:[]
-            
-
-
-
+            likedBy:[],
+            unliked:0
 
           }
 

@@ -145,9 +145,6 @@ useEffect(()=>{
    setOpenModalSign(false)
 
   }
-  //   var username
-  // user? username=user.displayName:console.log("user not found")
-   exemple?console.log("image url found",exemple):console.log("nada")
   return (
     <div className="root">
 

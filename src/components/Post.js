@@ -114,7 +114,7 @@ const useStyle=makeStyles(theme=>(
 ))
 const Post=(props)=>{
     
-const {username,avatar,caption,imageUrl,like,unlike}=props.post.post
+const {username,avatar,caption,imageUrl,like,unlike,likedBy}=props.post.post
 const {id}=props.post
 const {openDeletePost,setOpenDeletePost,openPostDialog,setOpenPostDialog}=props
 
@@ -128,8 +128,23 @@ const [userLogged,setUserLogged]=useState(false)
 
 const [isLiked,setIsLiked]=useState(false)
 const [isUnliked,setIsUnliked]=useState(false)
+const [alreadyLiked,setalreadyLiked]=useState(false)
+const [forwardName,setForwardName]=useState("")
 
 const classes=useStyle()
+// this hook help to watch wheter the post is liked by it owner
+useEffect(()=>{
+    let nameFound
+    if(user){
+        nameFound=likedBy.find(name => name==user.displayName)
+        if(nameFound){
+            setalreadyLiked(!alreadyLiked)
+        }
+       setForwardName(likedBy.find(name=> name != user.displayName))
+       console.log("value of forwardName",forwardName)
+    }
+
+},[likedBy,user])
 // this hook help to fetch comments from a specifique post 
 useEffect(() => {
     let unsubscribe
@@ -180,20 +195,14 @@ const handleLiked=()=>{
     
     let newLike=like
     newLike++
-    let data
-    db.collection("post").doc(id).get().then(
-     doc=>data=doc.data()
-    ).catch(error => console.log("error fetching data from document is not satisfied",error))
+    likedBy.push(user.displayName)
 
     // like:0,
     // likedBy:[]
             
     if(id){
 
-        db.collection("post").doc(id).update({
-            like:newLike,
-            likedBy:[...user.displayName,data.likedBy]
-        })
+        db.collection("post").doc(id).update({like:newLike,likedBy})
         setIsLiked(true)
         setAction(!action)
         
@@ -209,6 +218,7 @@ const handleUnliked=()=>{
 
     setIsUnliked(true)
     setAction(!action)
+  
 }
 
 // THIS METHODE HELP TO ACTIVATE THE ALERT WICH SHOW THE USER IS NOT LOGGED
@@ -276,38 +286,57 @@ const postComment=(e)=>{
            {/*post caption*/}
                 <div>
             {/**like dislike block */}    
-                <div className={classes.like_dislike_container}>
-            {
+                        <div className={classes.like_dislike_container}>
+                                    {
 
-                action?(
-                    <IconButton  className="likeButton" onClick={user?handleLiked:activate} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
-            <LikeOutlined  />{like}
-            </IconButton>
-                ):(<IconButton  className="likeButton" onClick={user?handleLiked:activate}  color={isLiked?"primary":"default"}>
-                <LikeOutlined  />{like}
-                </IconButton>)
-            }
+                                        alreadyLiked?(
+                                            <IconButton  className="likeButton" onClick={user?handleLiked:activate} disabled color={isLiked?"primary":"default"} style={{backgroundColor:"lightgray"}}>
+                                    <LikeOutlined  />{like}
+                                    </IconButton>
+                                        ):(<IconButton  className="likeButton" onClick={user?handleLiked:activate}  color={isLiked?"primary":"default"}>
+                                        <LikeOutlined  />{like}
+                                        </IconButton>)
+                                    }
 
-            {
-                action?(
-                    <IconButton   className="unLikeButton" onClick={handleUnliked} disabled color={isUnliked?"danger":"default"}>
-                    <DislikeOutlined />{unlike}
-                </IconButton>
+                                    {
+                                        alreadyLiked?(
+                                            <IconButton   className="unLikeButton" onClick={handleUnliked} disabled color={isUnliked?"danger":"default"}>
+                                            <DislikeOutlined />{unlike}
+                                        </IconButton>
 
-    
-                ):(
-                    <IconButton   className="unLikeButton" onClick={handleUnliked} color={isUnliked?"danger":"default"}>
-                    <DislikeOutlined />{unlike}
-                </IconButton>
-    
-                )
-            }
-                </div>
-                {caption?(
-                    <div className={classes.post__caption}><p><small style={{fontWeight:"bold",fontSize:"15px"}}>{username}</small> <small>{caption}</small></p></div>
-                ):
-               <Skeleton variant="text" width="100%"/>}
-               
+                            
+                                        ):(
+                                            <IconButton   className="unLikeButton" onClick={handleUnliked} color={isUnliked?"danger":"default"}>
+                                            <DislikeOutlined />{unlike}
+                                        </IconButton>
+                            
+                                        )
+                                    }
+                        </div>
+                        {/*CLOSE RESERVED FOR "LIKED BY" SENTENSE*/}
+                    {
+                        alreadyLiked && likedBy.length>1?(
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>,<strong>{forwardName}</strong> and {likedBy.length} others</p></div>
+                        ):null
+                    }
+                    {alreadyLiked && likedBy.length==1?(
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong></p></div>
+                    ):null}
+                    
+                    {!alreadyLiked && likedBy.length==1?(
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy.[0]}</strong></p></div>
+                    ):null}
+
+                    {!alreadyLiked && likedBy.length>1?(
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and {likedBy.length-1} others</p></div>
+                    ):null}
+                    
+                    {caption?(
+                                    <div className={classes.post__caption}><p><small style={{fontWeight:"bold",fontSize:"15px"}}>{username}</small> <small>{caption}</small></p></div>
+                                ):
+                            <Skeleton variant="text" width="100%"/>}
+                    
+                   
                 </div>
           
             </div>
