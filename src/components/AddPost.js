@@ -24,17 +24,18 @@ const useStyle=makeStyles(theme=>({
      },
      addPost__container :{
          
-         textAlign:"left"
+         textAlign:"left",
+         height:"100%"
 
         
-     }
-     ,
+     },
      addPost__textfield :{
 
          marginLeft:"10px"
 
      },
      addPost__addIcon:{
+         transform:"translate(50%,50%)",
          fontSize:"50px",
          color:"black",
          ":hover":{
@@ -42,7 +43,7 @@ const useStyle=makeStyles(theme=>({
          }
      },
      addPost__imageContainer:{
-            height:"200px",
+            height:"100%",
             border:"1px solid #3870AF",
             margin:"0px 10px 10px 10px ",
             alignItems:"center",
@@ -102,6 +103,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
 
           )
           setProgressBar(0)
+
           setCaption("")
           setImage(null)
         }
@@ -147,7 +149,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
               </DialogContentText>
               <DialogActions>
                 <Button color="danger" variant="contained" onClick={()=>setOpenAddPost(!openAddPost)}>cancel</Button>
-                <Button color="primary" variant="contained" onClick={()=>uploadImage()}> post</Button>
+                <Button color="primary" variant="contained"  onClick={()=>uploadImage()}> post</Button>
               </DialogActions>
             </Dialog>
               </center>

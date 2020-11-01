@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Post from "../components/Post"
 import {db,auth} from "../firebaseConfig"
 import {makeStyles} from "@material-ui/styles"
+import Container from "@material-ui/core/Container"
 
 
 import { Row, Col } from 'antd';
@@ -56,6 +57,7 @@ useEffect(()=>{
         <div>
             
              
+               
             <div className="post__container">
             <div className="post">
                 {postes?postes.map(post =><Post key={post.id}
@@ -77,6 +79,7 @@ useEffect(()=>{
                 
             
             </div>
+
         </div>
     )
 }

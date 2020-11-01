@@ -123,7 +123,7 @@
   }
   .app__header{
     position:fixed;
-    max-width: 600px;
+
     width: 100%;
 
     align-items: center;
@@ -155,7 +155,40 @@
   .unLikeButton {
     font-size: 16px !important;
   }
+   
+/* profile */
+.profile{
+  padding-top: 30px;
+  width: 100%;
+}
 
+.profileUp {
+  display:flex;
+  background-color:blue ;
+}
+.profileAvatar{
+ padding-top: 40px !important;
+  width: 40%;
+  height: 100%;
+  background-color: orangered;
+  align-items: center;
+}
+.profileInformation {
+  width: 60%;
+}
+#avatar {
+padding-top: 0;
+  width: 40%;
+  height: 40%;  
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+.allPost {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -239,12 +272,6 @@
      margin:0;
      padding-top: 50px !important;
     
-     
-
-    
-
-
-  
   }
   .post__online{
 
@@ -258,6 +285,41 @@
     font-size: 20px !important;
   }
 
+/* profile */
+.profile{
+  padding-top: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  /* align-self: center; */
+}
+.profileUp {
+  display: flex;
+  background-color:blue ;
+  flex-direction: row;
+
+}
+.profileAvatar{
+  padding-top: 30px;
+  width: 50%;
+  background-color: orangered;
+  align-items: center;
+
+}
+.avatar {
+  width: 100%;
+   object-fit: contain;
+  border-radius: 50%;
+  float: right;
+}
+.profileInformation{
+  padding-top: 40px;
+}
+.allPost {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
 }
 @media  screen and (min-width: 768px){
   .root{
@@ -299,6 +361,32 @@
   top: 40%;
 
 }
+
+/* profile */
+.profile{
+  padding-top: 30px;
+  width: 100%;
+  transform: translate(70px,0px);
+
+}
+.profileUp {
+  display: flex;
+  background-color:blue ;
+  flex-direction: row;
+}
+.profileAvatar{
+  width: 50%;
+  background-color: orangered;
+}
+.allPost {
+  width: 100%;
+  justify-content: center;
+  background-color: green;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 }
 
 @media screen and (min-width :992px){
@@ -331,9 +419,7 @@
     margin-bottom: 10px;
     
     top: 0;
-  
-    
-    
+
    
   }
   .app__headerButton {
@@ -393,5 +479,76 @@
     box-sizing: border-box;
   }
   
+/* profile */
+.profile{
+  margin-top: 60px;
+  width: 100%;
+  transform: translate(70px,0px);
 
+  }
+  .profileUp {
+    
+    display: flex;
+    flex-direction: row;
+  }
+  .profileAvatar{
+    width: 30%;
+
+
+  }
+  .profileInformation {
+    width: 70%;
+  }
+  .avatar {
+
+    width: 100%;
+    height: 70%;
+     
+    border: 7px solid black;
+    object-fit: contain;
+  }
+  .allPost {
+    background-color:green ;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width:500px){
+
+  /* profile */
+  .profile{
+    padding-top: 30px;
+    width: 100%;
+  }
+  .profileUp {
+    display: flex;
+    background-color:blue ;
+    flex-direction: row;
+  }
+  .profileAvatar{
+    padding-top: 30px;
+    width: 50%;
+    background-color: orangered;
+  }
+  .avatar {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+  .profileInformation{
+    padding-top: 40px;
+    width: 50%;
+  }
+  .profileInformationFollwers {
+    display: block !important;
+  }
+  .allPost {
+    background-color: green;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }

@@ -170,6 +170,7 @@ useEffect(()=>{
         setUser(user)
         setUserLogged(false)
         setAction(false)
+        console.log("user from Post",user)
     }else{
        console.log("current user",user)
     }
@@ -315,16 +316,25 @@ const postComment=(e)=>{
                         </div>
                         {/*CLOSE RESERVED FOR "LIKED BY" SENTENSE*/}
                     {
-                        alreadyLiked && likedBy.length>1?(
-                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>,<strong>{forwardName}</strong> and {likedBy.length} others</p></div>
+                        alreadyLiked && likedBy.length>1 && (likedBy.length-2>0)?(
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>,<strong>{forwardName}</strong> and {likedBy.length-1} </p></div>
                         ):null
                     }
-                    {alreadyLiked && likedBy.length==1?(
+                    {
+                        alreadyLiked && likedBy.length>1 && (likedBy.length-1)==0?(
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>and<strong>{forwardName}</strong></p></div>
+                        ):null
+                    }
+
+                    {alreadyLiked && likedBy.length==1 && (likedBy.length-2==0)?(
                         <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong></p></div>
+                    ):null}
+                    {alreadyLiked && (likedBy.length==2)?(
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong> and <strong>{forwardName}</strong></p></div>
                     ):null}
                     
                     {!alreadyLiked && likedBy.length==1?(
-                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy.[0]}</strong></p></div>
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong></p></div>
                     ):null}
 
                     {!alreadyLiked && likedBy.length>1?(
