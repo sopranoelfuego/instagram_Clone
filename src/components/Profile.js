@@ -10,6 +10,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import {EachPost} from "./EachPost"
+import {Row} from "antd"
 
 const useStyle=makeStyles(theme=>({
   root: {
@@ -136,6 +137,7 @@ const useStyle=makeStyles(theme=>({
     <Divider/>
     <div className="allPost">
       {/*posts...*/}
+      
       {
         posts.map(post => <EachPost key={post.id} post={post} />)
         // posts.map(post =><h2>post and post again</h2>)

@@ -1,14 +1,20 @@
 import React,{useState,useEffect} from "react"
+import {Col} from "antd"
 import Container from "@material-ui/core/Container"
 import {makeStyles} from "@material-ui/core/styles"
 import {db} from "../firebaseConfig"
+import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, ConsoleSqlOutlined } from '@ant-design/icons';
+import IconButton from "@material-ui/core/IconButton"
+import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
+
 
 
 
 const useStyle=makeStyles(theme =>({
     root:{
         width:"32%",
-        backgroundColor:"grey"
+        backgroundColor:"grey",
+        border:"2px solid grey"
     }
 }))
 
@@ -46,8 +52,22 @@ const classes=useStyle()
           <div className={classes.root}>
           <Container>
               <img src={imageUrl} style={{width:"100%",objectFit:"contain"}}/>
-              <p>{like}</p>
-              <p>{unliked}</p>
+              
+              <div className="eachPost">
+                 <span>
+                   <IconButton>
+                     <LikeOutlined/> {like}
+                   </IconButton>
+                 </span>
+                 <span>
+                   <IconButton>
+                    <DislikeOutlined/>{unliked}
+                   </IconButton>
+                 </span>
+                 <span>
+                    <CommentOutlinedIcon/>{comments.length}
+                 </span>
+              </div>
               </Container>
           </div>
         
