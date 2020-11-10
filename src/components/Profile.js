@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import {EachPost} from "./EachPost"
 import {Row} from "antd"
+import {storage} from "../firebaseConfig"
 
 const useStyle=makeStyles(theme=>({
   root: {
@@ -52,6 +53,7 @@ const useStyle=makeStyles(theme=>({
   const [posts, setPosts] = useState([])
   const [name, setName] = useState("")
   const [prenom, setPrenom] = useState("")
+  const [profile,setProfile]=useState([])
   const [image, setImage] = useState(null)
   const [currentUser,setCurrentUser]=useState(null)
   const classes=useStyle()
@@ -66,11 +68,26 @@ const useStyle=makeStyles(theme=>({
 
   //   }
   // },[])
+
+  // THIS HOOK WILL UPDATE THE PROFILE
+  useEffect(()=>{
+      let user =auth.currentUser
+      db.collection("profile").where("username","==",user.displayName).get()
+      .then(doc =>{
+        setProfile(doc.docs.map(document=>({
+          id:document.id,
+          profile:document.data()
+        })))
+        .catch(error=>console.log("error profile not found",error))
+      })
+
+  },[])
   useEffect(()=>{
     let user = auth.currentUser
 
     if(user){
       if(user.displayName){
+
         db.collection("post").where("username","==",user.displayName).get()
         .then(doc =>{
           if(doc){
@@ -92,8 +109,7 @@ const useStyle=makeStyles(theme=>({
    
 
   },[])
-  // ARE THE POSTS WELL FETCHED?
-  posts.map(post => console.log(post.id,"=>",post.post))
+
   
   const onSubmit = (e) => {
     e.preventDefault()

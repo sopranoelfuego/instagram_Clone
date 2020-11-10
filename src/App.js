@@ -131,8 +131,17 @@ useEffect(()=>{
     })})
     .catch(error=> alert(error.message))
     
-  console.log("here is data from form: ",password,email)
-    setOpenModal(false)
+    db.collection("profile").add({
+      username:userName,
+      profilePic:"",
+      followers:0,
+      following:0,
+      posts:0,
+      email:email,
+      password:password,
+
+    })
+
   }
   const signin=(e)=>{
     
@@ -161,7 +170,7 @@ useEffect(()=>{
     <SignInModal openModalSignin={openModalSignin} setEmail={setEmail} setPassword={setPassword} signin={signin} setOpenModalSign={setOpenModalSign} classes={classes}/>
      
     {/**i make this to bind the crash with displayName
-       which need to be in condition if or to be destructuring
+       which need to be in ternair condition  or to be destructuring
  */}
    { user? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:null}
     

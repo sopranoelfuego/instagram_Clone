@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles"
 import {db} from "../firebaseConfig"
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, ConsoleSqlOutlined } from '@ant-design/icons';
 import IconButton from "@material-ui/core/IconButton"
+
 import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
 
 
@@ -15,6 +16,18 @@ const useStyle=makeStyles(theme =>({
         width:"32%",
         backgroundColor:"grey",
         border:"2px solid grey"
+    },
+    image :{
+      width:"100%",
+      height:"70%"  ,
+      zIndex:"-1",
+
+    },
+    information:{
+        zIndex:"1",
+        position:"relative",
+        button:"30%"
+        
     }
 }))
 
@@ -24,7 +37,7 @@ const {like,unliked,imageUrl}=post.post
 const {id}=post.id
  
 const [comments,setComments]=useState([])
-
+// THIS HOOK IS FETCHS COMMENTS 
 useEffect(()=>{
     let unsubscribe
   if(id){
@@ -43,26 +56,28 @@ useEffect(()=>{
       
   }
   return ()=>unsubscribe()
-},[id])
+},[])
 const classes=useStyle()
-
+// IS COMMENTS WELL FETCHED 
+{comments.length>0 ? comments.map(comment => console.log("comment",comment)):console.log("comment not fetched from eachPost")}
 
     return (
         
           <div className={classes.root}>
           <Container>
+             <div  className={classes.image}>
               <img src={imageUrl} style={{width:"100%",objectFit:"contain"}}/>
-              
-              <div className="eachPost">
+             </div>
+              <div className={classes.information}>
                  <span>
-                   <IconButton>
+                  
                      <LikeOutlined/> {like}
-                   </IconButton>
+                   
                  </span>
                  <span>
-                   <IconButton>
+                   
                     <DislikeOutlined/>{unliked}
-                   </IconButton>
+                   
                  </span>
                  <span>
                     <CommentOutlinedIcon/>{comments.length}

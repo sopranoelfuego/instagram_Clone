@@ -114,7 +114,8 @@ const useStyle=makeStyles(theme=>(
 ))
 const Post=(props)=>{
     
-const {username,avatar,caption,imageUrl,like,unlike,likedBy}=props.post.post
+const {username,avatar,caption,imageUrl,like,unliked,likedBy}=props.post.post
+
 const {id}=props.post
 const {openDeletePost,setOpenDeletePost,openPostDialog,setOpenPostDialog}=props
 
@@ -211,10 +212,10 @@ const handleLiked=()=>{
 
 }
 const handleUnliked=()=>{
-    let newUnLike=unlike
+    let newUnLike=unliked
     newUnLike++
     if(id){
-        db.collection("post").doc(id).update({unlike:newUnLike})
+        db.collection("post").doc(id).update({unliked:newUnLike})
     }
 
     setIsUnliked(true)
@@ -302,13 +303,13 @@ const postComment=(e)=>{
                                     {
                                         alreadyLiked?(
                                             <IconButton   className="unLikeButton" onClick={handleUnliked} disabled color={isUnliked?"danger":"default"}>
-                                            <DislikeOutlined />{unlike}
+                                            <DislikeOutlined />{unliked}
                                         </IconButton>
 
                             
                                         ):(
                                             <IconButton   className="unLikeButton" onClick={handleUnliked} color={isUnliked?"danger":"default"}>
-                                            <DislikeOutlined />{unlike}
+                                            <DislikeOutlined />{unliked}
                                         </IconButton>
                             
                                         )
@@ -325,7 +326,9 @@ const postComment=(e)=>{
                             <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>and<strong>{forwardName}</strong></p></div>
                         ):null
                     }
-
+                    {alreadyLiked && likedBy.length==1?(
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong></p></div>
+                    ):null}
                     {alreadyLiked && likedBy.length==1 && (likedBy.length-2==0)?(
                         <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong></p></div>
                     ):null}
@@ -340,7 +343,11 @@ const postComment=(e)=>{
                     {!alreadyLiked && likedBy.length>1?(
                         <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and {likedBy.length-1} others</p></div>
                     ):null}
-                    
+                    {
+                        !alreadyLiked && likedBy.length==2?(
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by {likedBy[0]} and {likedBy[1]}</p></div>
+                        ):null
+                    }
                     {caption?(
                                     <div className={classes.post__caption}><p><small style={{fontWeight:"bold",fontSize:"15px"}}>{username}</small> <small>{caption}</small></p></div>
                                 ):
