@@ -51,6 +51,7 @@ const useStyle=makeStyles(theme=>({
    const Profile = (props) => {
 
   const [posts, setPosts] = useState([])
+  const [profilesChosen,setProfileChosen]=useState([])
   const [name, setName] = useState("")
   const [prenom, setPrenom] = useState("")
   const [profile,setProfile]=useState([])
@@ -72,16 +73,24 @@ const useStyle=makeStyles(theme=>({
   // THIS HOOK WILL UPDATE THE PROFILE
   useEffect(()=>{
       let user =auth.currentUser
-      db.collection("profile").where("username","==",user.displayName).get()
-      .then(doc =>{
-        setProfile(doc.docs.map(document=>({
-          id:document.id,
-          profile:document.data()
-        })))
-        .catch(error=>console.log("error profile not found",error))
+    let unsubscribe
+    if(user.displayName){
+     unsubscribe= db.collection("profile").where("username","==",user.displayName).onSnapshot(doc =>{
+      setProfile(doc.docs.map(document=>({
+        id:document.id,
+        profile:document.data()
+      })))
+
       })
 
+
+  return ()=>unsubscribe()
+  
+    }
+
   },[])
+  console.log("profile chosen.. line 92 from profilecomponent",profilesChosen)
+  // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
     let user = auth.currentUser
 
@@ -119,6 +128,7 @@ const useStyle=makeStyles(theme=>({
     }).then(place => console.log("success", place)).catch(err => console.log("error over here", err))
   }
   return (
+
     <div  className="profile">
       { /* this scope will contain the profile avatar and informations below*/} 
       <Container maxWidth="md">
@@ -135,17 +145,19 @@ const useStyle=makeStyles(theme=>({
        
       {/* this scope will contain th informatio of the user followers following post and location*/}
       <div className="profileInformation">
-         <Container>
-         <div style={{display:"flex",flexDirection:"row"}}>
-         <div>username</div>
-         <button onClick="">edit post</button>
-         </div>
-         <div style={{display:"flex",flexDirection:"row"}} className="profileInformationFollwers">
-         <div>0post </div>
-         <div>0followers</div>
-         <div>0follow</div>
-         </div>
-         </Container>
+         {
+           profile.map(profile=>(<Container>
+            <div style={{display:"flex",flexDirection:"row"}}>
+            <div>{profile.profile.username}</div>
+            <button onClick="">edit profile</button>
+            </div>
+            <div style={{display:"flex",flexDirection:"row"}} className="profileInformationFollwers">
+            {posts.length>1?(<div>{posts.length} posts</div>):<div>{posts.length}post</div>}
+            {profile.profile.followers>1?(<div>{profile.profile.followers} followers</div>):(<div>{profile.profile.followers} follower</div>)}
+            {profile.profile.following>1?(<div>{profile.profile.following} followings</div>):(<div>{profile.profile.following} following</div>)}
+            </div>
+            </Container>))
+         }
       </div>
     </div>
     {/*end of first div which contain the avatar and informations*/}

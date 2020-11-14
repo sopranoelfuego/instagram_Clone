@@ -142,7 +142,7 @@ useEffect(()=>{
             setalreadyLiked(!alreadyLiked)
         }
        setForwardName(likedBy.find(name=> name != user.displayName))
-       console.log("value of forwardName",forwardName)
+       
     }
 
 },[likedBy,user])
@@ -318,12 +318,13 @@ const postComment=(e)=>{
                         {/*CLOSE RESERVED FOR "LIKED BY" SENTENSE*/}
                     {
                         alreadyLiked && likedBy.length>1 && (likedBy.length-2>0)?(
-                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>,<strong>{forwardName}</strong> and {likedBy.length-1} </p></div>
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong> and {likedBy.length-1} </p></div>
                         ):null
                     }
+                  
                     {
-                        alreadyLiked && likedBy.length>1 && (likedBy.length-1)==0?(
-                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong>and<strong>{forwardName}</strong></p></div>
+                        alreadyLiked && likedBy.length===2?(
+                            <div style={{paddingLeft:"30px"}}><p  style={{fontSize:"13px"}}>liked by <strong>you </strong> and <strong>{likedBy[1]}</strong></p></div>
                         ):null
                     }
                     {alreadyLiked && likedBy.length==1?(
@@ -332,20 +333,21 @@ const postComment=(e)=>{
                     {alreadyLiked && likedBy.length==1 && (likedBy.length-2==0)?(
                         <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong></p></div>
                     ):null}
-                    {alreadyLiked && (likedBy.length==2)?(
-                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>you</strong> and <strong>{forwardName}</strong></p></div>
-                    ):null}
                     
                     {!alreadyLiked && likedBy.length==1?(
                         <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong></p></div>
                     ):null}
-
-                    {!alreadyLiked && likedBy.length>1?(
+                     
+                    {!alreadyLiked && likedBy.length==3?(
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and {likedBy.length-1} other</p></div>
+                    ):null}
+                    
+                    {!alreadyLiked && likedBy.length>2 && likedBy.length>3?(
                         <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and {likedBy.length-1} others</p></div>
                     ):null}
                     {
                         !alreadyLiked && likedBy.length==2?(
-                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by {likedBy[0]} and {likedBy[1]}</p></div>
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and <strong>{likedBy[1]}</strong></p></div>
                         ):null
                     }
                     {caption?(

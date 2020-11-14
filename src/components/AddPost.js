@@ -80,7 +80,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
       )
       setProgressBar(progress)
 
-
+     
      },
     //  here i catch error and the as is not a friendly message i 
     // console it hahah lol
@@ -89,7 +89,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
      ()=>{
       storage.ref("images").child(image.name).getDownloadURL().then(
         url=>{
-                      // so we can upload the whole post in db
+                      // so we put  the whole post in firestore
           db.collection("post").add({
             timestamp:firebase.firestore.FieldValue.serverTimestamp(),
             caption:caption,

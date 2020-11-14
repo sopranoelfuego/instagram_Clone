@@ -12,7 +12,7 @@ return (
           <h4 style={{paddingTop:"20px",color:"GrayText"}}>ISoprano</h4>
       </Link>
       <div className="app__headerButton">
-        {user?(
+        {(auth.currentUser!=null) && user ?(
           <React.Fragment>
           <Link to="/Profile" style={{textDecoration:"none"}}><Button color="success" style={{textDecoration:"none !important"}}>profile</Button></Link>
           <Button color="success" onClick={()=>setOpenAddPost(true)}>add post</Button>

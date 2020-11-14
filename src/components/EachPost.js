@@ -53,13 +53,12 @@ useEffect(()=>{
 
           })
           .catch(error => console.log("error pay attention..",error))
+          return ()=>unsubscribe()
       
   }
-  return ()=>unsubscribe()
+
 },[])
 const classes=useStyle()
-// IS COMMENTS WELL FETCHED 
-{comments.length>0 ? comments.map(comment => console.log("comment",comment)):console.log("comment not fetched from eachPost")}
 
     return (
         

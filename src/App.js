@@ -112,7 +112,7 @@ useEffect(()=>{
           })
         }
       }else{
-        // whata to do if user is no longer logged (is logout)
+        // what to do if user is no longer logged (is logout)
         setUser(null)
       }
 
@@ -141,6 +141,7 @@ useEffect(()=>{
       password:password,
 
     })
+    setOpenModal(true)
 
   }
   const signin=(e)=>{
