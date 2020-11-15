@@ -9,6 +9,9 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Tooltip from "@material-ui/core/Tooltip"
+import Fab from "@material-ui/core/Fab"
+import AddIcon from "@material-ui/icons/Add"
 import {EachPost} from "./EachPost"
 import {Row} from "antd"
 import {storage} from "../firebaseConfig"
@@ -21,20 +24,15 @@ const useStyle=makeStyles(theme=>({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
-  gridList: {
-    width: 500,
-    height: 450,
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
-  },
-  titleBar: {
-    background:
-      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-  },
-  icon: {
-    color: 'white',
-  },
+ 
+ fab :{
+  width:theme.spacing(4),
+  height:theme.spacing(4),
+  transform:"translate(50%,-30%)",
+  margin:"0",
+  padding:"0"
+
+ },
   avatar:{
 
     width: theme.spacing(15),
@@ -137,7 +135,23 @@ const useStyle=makeStyles(theme=>({
       {/*this scope will contain the avatar the biggest one*/}
       <div className="profileAvatar">
       <Container>
-      <Avatar src="./images/1.jpg" className={classes.avatar} /> 
+      {profile.map(profile => profile.profile.profilePic != null?(<Avatar src={profile.profilePic} className={classes.avatar} /> ):(<Avatar></Avatar>))}
+     <label for="upload">
+     
+     
+     <span>
+     <Tooltip title="update profile picture..." aria-label="add">
+     <Fab color="success" className={classes.fab}>
+       <AddIcon />
+     </Fab>
+
+   </Tooltip>
+     </span>
+
+
+     
+     </label>
+     <input type="file" id="upload"  hidden onChange=""/>
       </Container>
       
        </div>
