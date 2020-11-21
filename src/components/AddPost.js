@@ -106,6 +106,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
 
           setCaption("")
           setImage(null)
+          setOpenAddPost(!openAddPost)
         }
 
       )
@@ -139,10 +140,10 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
                   +
                </span>
                   }
-                <input type="file" id="upload" style={{display:"none"}} hidden onChange={handleImageChange}/>
+                <input type="file" id="upload" style={{display:"none"}}  onChange={handleImageChange}/>
                     </label>
                   
-                  
+    
                   </div>
                   <TextField  onChange={(e)=>setCaption(e.target.value)} variant="standard" label="add caption" className={classes.addPost__textfield}/>
               </div>

@@ -160,11 +160,12 @@
 .profile{
   padding-top: 30px;
   width: 100%;
+  background-color:#ebf0ec ;
 }
 
 .profileUp {
   display:flex;
-  background-color:blue ;
+  background-color:#ebf0ec ;
 }
 .profileAvatar{
  padding-top: 40px !important;
@@ -290,11 +291,12 @@ padding-top: 0;
   padding-top: 30px;
   width: 100%;
   box-sizing: border-box;
+  background-color:#ebf0ec ;
   /* align-self: center; */
 }
 .profileUp {
   display: flex;
-  background-color:blue ;
+  background-color:#ebf0ec ;
   flex-direction: row;
 
 }
@@ -367,11 +369,12 @@ padding-top: 0;
   padding-top: 30px;
   width: 100%;
   transform: translate(70px,0px);
+  background-color:#ebf0ec ;
 
 }
 .profileUp {
   display: flex;
-  background-color:blue ;
+  background-color:#ebf0ec ;
   flex-direction: row;
 }
 .profileAvatar{
@@ -484,12 +487,14 @@ padding-top: 0;
   margin-top: 60px;
   width: 100%;
   transform: translate(70px,0px);
+  background-color:#ebf0ec ;
 
   }
   .profileUp {
     
     display: flex;
     flex-direction: row;
+    background-color:#ebf0ec ;
   }
   .profileAvatar{
     width: 30%;
@@ -521,10 +526,11 @@ padding-top: 0;
   .profile{
     padding-top: 30px;
     width: 100%;
+    background-color:#ebf0ec ;
   }
   .profileUp {
     display: flex;
-    background-color:blue ;
+    background-color:#ebf0ec ;
     flex-direction: row;
   }
   .profileAvatar{

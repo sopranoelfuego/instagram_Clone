@@ -33,6 +33,14 @@ const useStyle=makeStyles(theme=>({
   padding:"0"
 
  },
+  button:{
+      padding:" 0 9px 0 9px",
+      fontSize:"30px",
+      borderRadius:"50%",
+      floatRight:"20%",
+      marginTop:"-5%",
+      
+  },
   avatar:{
 
     width: theme.spacing(15),
@@ -125,6 +133,10 @@ const useStyle=makeStyles(theme=>({
       ville: { ...cont }
     }).then(place => console.log("success", place)).catch(err => console.log("error over here", err))
   }
+
+  // THIS METHODE HELP TO GET THE FILE(IMAGE) CHOSEN
+  const handleProfileImage=(e)=>e.target.files[0]?setImage(e.target.files[0]):null
+  
   return (
 
     <div  className="profile">
@@ -136,22 +148,18 @@ const useStyle=makeStyles(theme=>({
       <div className="profileAvatar">
       <Container>
       {profile.map(profile => profile.profile.profilePic != null?(<Avatar src={profile.profilePic} className={classes.avatar} /> ):(<Avatar></Avatar>))}
-     <label for="upload">
-     
-     
-     <span>
-     <Tooltip title="update profile picture..." aria-label="add">
-     <Fab color="success" className={classes.fab}>
-       <AddIcon />
-     </Fab>
+        <label for="upload" >
 
-   </Tooltip>
-     </span>
+            <div style={{backgroundColor:"grey",textAlign:"center",borderRadius:"50%",marginTop:"-10%",width:"20%",height:"25%",transform:"translate(60%,-70%)",alignItems:"center", margin:"0 0 20px 30%"}}>
+            <Tooltip title="change profile picture..">
+            <p style={{fontSize:"20px",}}>+</p>
+            </Tooltip>
+            </div>
+           
+    </label>
+    <input type="file" id="upload" accept="image/*" style={{display:"none"}} onChange={handleProfileImage}/>
 
 
-     
-     </label>
-     <input type="file" id="upload"  hidden onChange=""/>
       </Container>
       
        </div>
@@ -161,11 +169,11 @@ const useStyle=makeStyles(theme=>({
       <div className="profileInformation">
          {
            profile.map(profile=>(<Container>
-            <div style={{display:"flex",flexDirection:"row"}}>
+            <div style={{display:"flex",flexDirection:"row",width:"100%",fontSize:"30px"}}>
             <div>{profile.profile.username}</div>
             <button onClick="">edit profile</button>
             </div>
-            <div style={{display:"flex",flexDirection:"row"}} className="profileInformationFollwers">
+            <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}} className="profileInformationFollwers">
             {posts.length>1?(<div>{posts.length} posts</div>):<div>{posts.length}post</div>}
             {profile.profile.followers>1?(<div>{profile.profile.followers} followers</div>):(<div>{profile.profile.followers} follower</div>)}
             {profile.profile.following>1?(<div>{profile.profile.following} followings</div>):(<div>{profile.profile.following} following</div>)}

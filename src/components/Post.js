@@ -144,6 +144,7 @@ useEffect(()=>{
        setForwardName(likedBy.find(name=> name != user.displayName))
        
     }
+    // 71025424: julio
 
 },[likedBy,user])
 // this hook help to fetch comments from a specifique post 
@@ -324,7 +325,7 @@ const postComment=(e)=>{
                   
                     {
                         alreadyLiked && likedBy.length===2?(
-                            <div style={{paddingLeft:"30px"}}><p  style={{fontSize:"13px"}}>liked by <strong>you </strong> and <strong>{likedBy[1]}</strong></p></div>
+                            <div style={{paddingLeft:"30px"}}><p  style={{fontSize:"13px"}}>liked by <strong>you </strong> and <strong>{forwardName}</strong></p></div>
                         ):null
                     }
                     {alreadyLiked && likedBy.length==1?(
@@ -335,11 +336,11 @@ const postComment=(e)=>{
                     ):null}
                     
                     {!alreadyLiked && likedBy.length==1?(
-                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong></p></div>
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{forwardName}</strong></p></div>
                     ):null}
                      
                     {!alreadyLiked && likedBy.length==3?(
-                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and {likedBy.length-1} other</p></div>
+                        <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{forwardName}</strong> and {likedBy.length-1} other</p></div>
                     ):null}
                     
                     {!alreadyLiked && likedBy.length>2 && likedBy.length>3?(
@@ -347,7 +348,7 @@ const postComment=(e)=>{
                     ):null}
                     {
                         !alreadyLiked && likedBy.length==2?(
-                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and <strong>{likedBy[1]}</strong></p></div>
+                            <div style={{paddingLeft:"30px"}}><p style={{fontSize:"13px"}}>liked by <strong>{likedBy[0]}</strong> and <strong>{forwardName}</strong></p></div>
                         ):null
                     }
                     {caption?(
@@ -363,6 +364,7 @@ const postComment=(e)=>{
                {userLogged?(<Alert severity="error" >you must log in to like a post...</Alert>):null}      
             <form>  
               {/**this scope  will contain input for comment*/}
+              
             <div style={{paddingBottom:"10px"}}>
              {comments.map(comment =><p style={{paddingLeft:"30px",fontSize:"15px"}} ><strong>{comment.comment.username}</strong> {comment.comment.text}</p>)}
             
