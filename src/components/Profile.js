@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { db ,auth} from "../firebaseConfig"
+import { db ,auth,storage} from "../firebaseConfig"
 import Avatar from "@material-ui/core/Avatar"
 import { makeStyles } from '@material-ui/core/styles';
 import Container from "@material-ui/core/Container"
@@ -14,7 +14,7 @@ import Fab from "@material-ui/core/Fab"
 import AddIcon from "@material-ui/icons/Add"
 import {EachPost} from "./EachPost"
 import {Row} from "antd"
-import {storage} from "../firebaseConfig"
+
 
 const useStyle=makeStyles(theme=>({
   root: {
@@ -78,10 +78,10 @@ const useStyle=makeStyles(theme=>({
 
   // THIS HOOK WILL UPDATE THE PROFILE
   useEffect(()=>{
-      let user =auth.currentUser
+      let userDisplayName =localStorage.getItem("displayName")
     let unsubscribe
-    if(user.displayName){
-     unsubscribe= db.collection("profile").where("username","==",user.displayName).onSnapshot(doc =>{
+    if(userDisplayName){
+     unsubscribe= db.collection("profile").where("username","==",userDisplayName).onSnapshot(doc =>{
       setProfile(doc.docs.map(document=>({
         id:document.id,
         profile:document.data()
@@ -98,12 +98,12 @@ const useStyle=makeStyles(theme=>({
   console.log("profile chosen.. line 92 from profilecomponent",profilesChosen)
   // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
-    let user = auth.currentUser
+    let userDisplayName = localStorage.getItem("displayName")
+    console.log("this is variable from localstorage Profile",userDisplayName)
 
-    if(user){
-      if(user.displayName){
+    if(userDisplayName){
 
-        db.collection("post").where("username","==",user.displayName).get()
+        db.collection("post").where("username","==",userDisplayName).get()
         .then(doc =>{
           if(doc){
             setPosts(doc.docs.map(doc => (
@@ -115,7 +115,7 @@ const useStyle=makeStyles(theme=>({
           }else console.log("error of fetching data from profile")
         }).catch(error => console.log("error accure",error))
     
-       }
+       
     }else{
       console.log("user not found from profile",null)
 
@@ -135,7 +135,13 @@ const useStyle=makeStyles(theme=>({
   }
 
   // THIS METHODE HELP TO GET THE FILE(IMAGE) CHOSEN
-  const handleProfileImage=(e)=>e.target.files[0]?setImage(e.target.files[0]):null
+  const handleProfileImage=(e)=>{
+    e.target.files[0]?setImage(e.target.files[0]):null
+   const displayName=localStorage("displayName")
+    const imageRef=storage.ref(`profiles/${displayName}/${e.target.files[0].name}`).put(e.target.files[0].name)
+
+  
+  }
   
   return (
 

@@ -100,7 +100,7 @@ useEffect(()=>{
   // unsubscribe const help to takeoff onAnthStateChanged backend listener to the useEffect frontend listener once is poped
   const unsubscribe=auth.onAuthStateChanged(userAuth=>{
       if(userAuth){
-        console.log("this mention user is logged in",userAuth)
+
         setUser(userAuth)
         // what to do  if user is logged
         if(userAuth.displayName){
@@ -131,7 +131,8 @@ useEffect(()=>{
     })})
     .catch(error=> alert(error.message))
     
-    db.collection("profile").add({
+    db.collection("profile").doc(email).set({
+      
       username:userName,
       profilePic:"",
       followers:0,
