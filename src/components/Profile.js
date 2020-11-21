@@ -136,7 +136,7 @@ const useStyle=makeStyles(theme=>({
 
   // THIS METHODE HELP TO GET THE FILE(IMAGE) CHOSEN
   const handleProfileImage=(e)=>{
-    e.target.files[0]?setImage(e.target.files[0]):null
+
    const displayName=localStorage("displayName")
     const imageRef=storage.ref(`profiles/${displayName}/${e.target.files[0].name}`).put(e.target.files[0].name)
 
