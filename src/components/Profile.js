@@ -63,23 +63,16 @@ const useStyle=makeStyles(theme=>({
   const [profile,setProfile]=useState([])
   const [image, setImage] = useState(null)
   const [currentUser,setCurrentUser]=useState(null)
+
   const classes=useStyle()
-  // THIS HOOK HELP TO RETRIEVE THE CURRENT USE WHICH IS LOGGED
-  // useEffect(()=>{
-  //   let user = auth.currentUser
-  //   if(user){
-  //       setCurrentUser(user)
-  //       console.log("this is user from currentUser",user)
-  //   }else{
-  //     console.log("user not found from profile",null)
-
-  //   }
-  // },[])
-
+  const userDisplayName=localStorage.getItem("displayName")
+  
   // THIS HOOK WILL UPDATE THE PROFILE
   useEffect(()=>{
-      let userDisplayName =localStorage.getItem("displayName")
+
     let unsubscribe
+
+
     if(userDisplayName){
      unsubscribe= db.collection("profile").where("username","==",userDisplayName).onSnapshot(doc =>{
       setProfile(doc.docs.map(document=>({
@@ -93,14 +86,14 @@ const useStyle=makeStyles(theme=>({
   return ()=>unsubscribe()
   
     }
+    setCurrentUser(auth.currentUser)
 
   },[])
-  console.log("profile chosen.. line 92 from profilecomponent",profilesChosen)
+
   // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
-    let userDisplayName = localStorage.getItem("displayName")
-    console.log("this is variable from localstorage Profile",userDisplayName)
 
+    
     if(userDisplayName){
 
         db.collection("post").where("username","==",userDisplayName).get()
@@ -135,14 +128,30 @@ const useStyle=makeStyles(theme=>({
   }
 
   // THIS METHODE HELP TO GET THE FILE(IMAGE) CHOSEN
-  const handleProfileImage=(e)=>{
-
-   const displayName=localStorage("displayName")
-    const imageRef=storage.ref(`profiles/${displayName}/${e.target.files[0].name}`).put(e.target.files[0].name)
-
   
-  }
+  const handleProfileImage=(e)=>e.target.files[0]?setImage(e.target.files[0]):null
   
+  // THIS HOOKS ONCE image IS MODIFIED WILL POP UP AND UPDATE PROFILE
+useEffect(()=>{
+      let unsubscribe
+      if(image){
+        let refImag=storage.ref(`profiles/${userDisplayName}`).put(image.name)
+
+        
+    storage.ref(`profiles/${userDisplayName}`).child(image.name).getDownloadURL()
+    .then(
+
+      urlGot=>{
+        db.collection("profile").doc(currentUser.email).update({
+          profilePic:urlGot
+        })
+      }
+    )
+
+      }
+
+
+},[image])
   return (
 
     <div  className="profile">
@@ -153,7 +162,7 @@ const useStyle=makeStyles(theme=>({
       {/*this scope will contain the avatar the biggest one*/}
       <div className="profileAvatar">
       <Container>
-      {profile.map(profile => profile.profile.profilePic != null?(<Avatar src={profile.profilePic} className={classes.avatar} /> ):(<Avatar></Avatar>))}
+      {profile.map(profile => profile.profile.profilePic != null?(<Avatar src={profile.profile.profilePic} className={classes.avatar} /> ):(<Avatar></Avatar>))}
         <label for="upload" >
 
             <div style={{backgroundColor:"grey",textAlign:"center",borderRadius:"50%",marginTop:"-10%",width:"20%",height:"25%",transform:"translate(60%,-70%)",alignItems:"center", margin:"0 0 20px 30%"}}>

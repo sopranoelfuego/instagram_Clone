@@ -82,10 +82,10 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
 
      
      },
-    //  here i catch error and the as is not a friendly message i 
+    //  here i catch error and  as is not a friendly message i 
     // console it hahah lol
      err=>console.log(err),
-    //THIS CALLBACK FUNCTION BRIEF GET THE URL OF THE IMAGE FROM THE DATABASE THEN UPDATE THE POST
+    //THIS CALLBACK FUNCTION BRIEF GET THE URL OF THE IMAGE FROM THE DATABASE(storage) THEN UPDATE THE POST
      ()=>{
       storage.ref("images").child(image.name).getDownloadURL().then(
         url=>{
