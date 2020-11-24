@@ -49,7 +49,7 @@ const useStyle=makeStyles(theme=>({
             alignItems:"center",
             textAlign:"center",paddingTop:"10%",boxSizing:"border-box"},
             "& hover":{
-                color:"bleu"
+                color:"blue "
             }
              ,
              progressBar:{
@@ -60,13 +60,15 @@ const useStyle=makeStyles(theme=>({
 }))
 
 const AddPost=({openAddPost,setOpenAddPost,username})=>{
+ 
 
     const [caption,setCaption]=  useState("")
     const [image,setImage]=useState(null)
     const [imageUrl,setImageUrl]=useState("")
     const [progressBar,setProgressBar]=useState(0)
    const classes=useStyle()
-
+    console.log("this is userDisplayName from AddPost line 70",username)
+   //THIS HOOK GET THE 
    const handleImageChange=(e)=>e.target.files[0]?setImage(e.target.files[0]):null
   //  this function set reference to the images in storage which will contain the image and then use the time wich
   //this process will take to update the progressBar
@@ -126,14 +128,7 @@ const AddPost=({openAddPost,setOpenAddPost,username})=>{
               <div className={classes.addPost__container}>
                   <div className={classes.addPost__imageContainer}>
                    
-                  {/*<label for="upload">  
-                        <span>
-                        <IconButton>
-                        <AddIcon className={classes.addPost__addIcon} />
-                        </IconButton></span>
-                    
-                    <input type="file"id="upload" name="choose" style={{display:"none"}}/>
-            </label>*/}
+                  
                   <label for="upload">
                     {image?<img src={image} style={{width:"100%",height:"100%"}}/>
                   :<span  className={classes.addPost__addIcon} aria-hidden="true">

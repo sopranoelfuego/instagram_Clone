@@ -119,7 +119,6 @@ const {username,avatar,caption,imageUrl,like,unliked,likedBy}=props.post.post
 const {id}=props.post
 const {openDeletePost,setOpenDeletePost,openPostDialog,setOpenPostDialog}=props
 
-
 const [user,setUser]=useState(null)
 
 const [comments,setComments]=useState([])

@@ -67,14 +67,32 @@ const useStyle=makeStyles(theme=>({
   const classes=useStyle()
   const userDisplayName=localStorage.getItem("displayName")
   
+  
   // THIS HOOK WILL UPDATE THE PROFILE
+
+  useEffect(()=>{
+  let user=auth.currentUser
+   let unsubscribe
+  if(user){
+    unsubscribe=db.collection("post").where("username","==",user.displayName).onSnapshot(
+      snapchot => {
+        setPosts(snapchot.docs.map(doc =>({
+          id:doc.id,
+          post: doc.data()
+        })))
+      }
+    )
+  }
+
+
+  },[])
   useEffect(()=>{
 
     let unsubscribe
+    let user=auth.currentUser
 
-
-    if(userDisplayName){
-     unsubscribe= db.collection("profile").where("username","==",userDisplayName).onSnapshot(doc =>{
+    if(user){
+     unsubscribe= db.collection("profile").where("username","==",user.displayName).onSnapshot(doc =>{
       setProfile(doc.docs.map(document=>({
         id:document.id,
         profile:document.data()
@@ -92,11 +110,11 @@ const useStyle=makeStyles(theme=>({
 
   // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
+   
+    let user=auth.currentUser
+    if(user){
 
-    
-    if(userDisplayName){
-
-        db.collection("post").where("username","==",userDisplayName).get()
+        db.collection("post").where("username","==",user.displayName).get()
         .then(doc =>{
           if(doc){
             setPosts(doc.docs.map(doc => (
@@ -134,11 +152,12 @@ const useStyle=makeStyles(theme=>({
   // THIS HOOKS ONCE image IS MODIFIED WILL POP UP AND UPDATE PROFILE
 useEffect(()=>{
       let unsubscribe
+      let user =auth.currentUser
       if(image){
-        let refImag=storage.ref(`profiles/${userDisplayName}`).put(image.name)
+        let refImag=storage.ref(`profiles/${user.displayName}`).put(image)
 
         
-    storage.ref(`profiles/${userDisplayName}`).child(image.name).getDownloadURL()
+    storage.ref(`profiles/${user.displayName}`).child(image.name).getDownloadURL()
     .then(
 
       urlGot=>{
@@ -149,6 +168,7 @@ useEffect(()=>{
     )
 
       }
+
 
 
 },[image])

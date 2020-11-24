@@ -84,25 +84,3 @@ useEffect(()=>{
     )
 }
 export default LandingPage
-
-
-
-/* 
-<div>
-            
-             
-            <div className="post__container">
-            <div className="post">
-                {postes?postes.map(post =><Post key={post.id} currentUser={user} post={post} />):<h2>cannot display postes</h2>}
-                
-
-                </div>
-                <div className="post__online">
-                <img src="/images/1.jpg" style={{width:"100%"}}/>
-                </div>
-
-            
-                
-            
-            </div>
-        </div>*/

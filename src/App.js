@@ -96,12 +96,16 @@ const [exemple,setExemple]=useState("")
 
 // this hooks help to track userActivity wether the user is logged 
 // or not then fires the event or keep trackin him
+
+
+
 useEffect(()=>{
   // unsubscribe const help to takeoff onAnthStateChanged backend listener to the useEffect frontend listener once is poped
   const unsubscribe=auth.onAuthStateChanged(userAuth=>{
       if(userAuth){
 
         setUser(userAuth)
+        console.log("this is user from App line 105",user)
         // what to do  if user is logged
         if(userAuth.displayName){
           // in this block means dat user already exist then we don t want to reupdate his profile
@@ -113,7 +117,10 @@ useEffect(()=>{
         }
       }else{
         // what to do if user is no longer logged (is logout)
+
+        console.log("error  user not found from App line 105",user)
         setUser(null)
+
       }
 
   })
@@ -143,14 +150,21 @@ useEffect(()=>{
 
     })
     setOpenModal(true)
+    localStorage.setItem("displayName",userName)
 
   }
   const signin=(e)=>{
     
-
    e.preventDefault()
-   auth.signInWithEmailAndPassword(email,password).then(authuser => 
-      <Alert severity="success" >welcom {authuser.displayName}...</Alert>)
+   auth.signInWithEmailAndPassword(email,password).then(authuser => {
+            if(!localStorage.getItem("displayName")){
+              localStorage.setItem("displayName",authuser.displayName)
+            
+        }
+   }
+      
+       
+    )
    .catch(err => <Alert severity="error">{err.message}</Alert> )
 
    setOpenModalSign(false)
@@ -174,8 +188,7 @@ useEffect(()=>{
     {/**i make this to bind the crash with displayName
        which need to be in ternair condition  or to be destructuring
  */}
-   { user? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:null}
-    
+   { user ? <AddPost openAddPost={openAddPost} setOpenAddPost={setOpenAddPost} username={user.displayName}/>:console.log("error user not found on App components line 191")}
 
   
     </div> 
