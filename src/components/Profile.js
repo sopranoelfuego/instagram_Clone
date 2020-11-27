@@ -92,7 +92,7 @@ const useStyle=makeStyles(theme=>({
     let user=auth.currentUser
 
     if(user){
-     unsubscribe= db.collection("profile").where("username","==",user.displayName).onSnapshot(doc =>{
+     unsubscribe = db.collection("profile").where("username","==",user.displayName).onSnapshot(doc =>{
       setProfile(doc.docs.map(document=>({
         id:document.id,
         profile:document.data()
@@ -106,7 +106,7 @@ const useStyle=makeStyles(theme=>({
     }
     setCurrentUser(auth.currentUser)
 
-  },[])
+  })
 
   // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
@@ -153,19 +153,21 @@ const useStyle=makeStyles(theme=>({
 useEffect(()=>{
       let unsubscribe
       let user =auth.currentUser
+
       if(image){
         let refImag=storage.ref(`profiles/${user.displayName}`).put(image)
 
         
-    storage.ref(`profiles/${user.displayName}`).child(image.name).getDownloadURL()
+    storage.ref(`profiles`).child(user.displayName).getDownloadURL()
     .then(
 
       urlGot=>{
-        db.collection("profile").doc(currentUser.email).update({
+        db.collection("profile").doc(user.email).update({
           profilePic:urlGot
         })
+
       }
-    )
+    ).catch(erro => console.log(erro))
 
       }
 
