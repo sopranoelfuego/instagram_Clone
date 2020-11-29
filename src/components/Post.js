@@ -391,7 +391,7 @@ const postComment=(e)=>{
            {user?(<div className={classes.commentContainer}>
            
             
-            <input onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="add comment..." className={classes.input}/>
+            <input onChange={(e)=>setComment(e.target.value)}  value={comment} placeholder="add comment..." className={classes.input}/>
              <Button className={classes.Button} onClick={postComment}>post</Button> 
 
            </div>

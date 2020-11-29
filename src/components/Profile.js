@@ -181,8 +181,9 @@ useEffect(()=>{
       {/*this scope will contain the avatar the biggest one*/}
       <div className="profileAvatar">
       <Container>
-      {auth.currentUser.photoURL != null?(<Avatar src={auth.currentUser.photoURL} alt="image" className={classes.avatar} /> ):(<Avatar className={classes.avatar}/>)}
-        <label for="upload" >
+      
+      {profile.map(profile => <Avatar src ={profile.profile.profilePic} className={classes.avatar} />)}
+      <label for="upload" >
 
             <div style={{backgroundColor:"grey",textAlign:"center",borderRadius:"50%",marginTop:"-10%",width:"20%",height:"25%",transform:"translate(60%,-70%)",alignItems:"center", margin:"0 0 20px 30%"}}>
             <Tooltip title="change profile picture..">
