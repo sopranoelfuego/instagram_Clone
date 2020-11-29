@@ -82,6 +82,7 @@ const useStyle=makeStyles(theme=>({
         })))
       }
     )
+    return ()=>unsubscribe()
   }
 
 
@@ -92,7 +93,7 @@ const useStyle=makeStyles(theme=>({
     let user=auth.currentUser
 
     if(user){
-     unsubscribe = db.collection("profile").where("username","==",user.displayName).onSnapshot(doc =>{
+     unsubscribe = db.collection("profile").where("username","==",user.displayName).get().then(doc =>{
       setProfile(doc.docs.map(document=>({
         id:document.id,
         profile:document.data()
@@ -101,17 +102,18 @@ const useStyle=makeStyles(theme=>({
       })
 
 
-  return ()=>unsubscribe()
   
     }
     setCurrentUser(auth.currentUser)
 
-  })
+  },[])
 
+  console.log("this is a debug fro profile which show profile info line 111 in Profile",profile)
   // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
    
     let user=auth.currentUser
+    document.cookie="SameSite=none"
     if(user){
 
         db.collection("post").where("username","==",user.displayName).get()
@@ -137,19 +139,14 @@ const useStyle=makeStyles(theme=>({
   },[])
 
   
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const cont = { name: name, place: prenom }
-    db.collection("post").doc("ville").set({
-      ville: { ...cont }
-    }).then(place => console.log("success", place)).catch(err => console.log("error over here", err))
-  }
+  
 
   // THIS METHODE HELP TO GET THE FILE(IMAGE) CHOSEN
   
   const handleProfileImage=(e)=>e.target.files[0]?setImage(e.target.files[0]):null
   
   // THIS HOOKS ONCE image IS MODIFIED WILL POP UP AND UPDATE PROFILE
+  profile.map(profile => console.log("this is profilePic from Profile component line 148",profile.profile.profilePic))
 useEffect(()=>{
       let unsubscribe
       let user =auth.currentUser
@@ -184,7 +181,7 @@ useEffect(()=>{
       {/*this scope will contain the avatar the biggest one*/}
       <div className="profileAvatar">
       <Container>
-      {profile.map(profile => profile.profile.profilePic != null?(<Avatar src={profile.profile.profilePic} className={classes.avatar} /> ):(<Avatar></Avatar>))}
+      {auth.currentUser.photoURL != null?(<Avatar src={auth.currentUser.photoURL} alt="image" className={classes.avatar} /> ):(<Avatar className={classes.avatar}/>)}
         <label for="upload" >
 
             <div style={{backgroundColor:"grey",textAlign:"center",borderRadius:"50%",marginTop:"-10%",width:"20%",height:"25%",transform:"translate(60%,-70%)",alignItems:"center", margin:"0 0 20px 30%"}}>

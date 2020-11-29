@@ -114,10 +114,12 @@ const useStyle=makeStyles(theme=>(
 ))
 const Post=(props)=>{
     
-const {username,avatar,caption,imageUrl,like,unliked,likedBy}=props.post.post
+const {username,caption,imageUrl,like,unliked,likedBy}=props.post.post
 
 const {id}=props.post
 const {openDeletePost,setOpenDeletePost,openPostDialog,setOpenPostDialog}=props
+
+
 
 const [user,setUser]=useState(null)
 
@@ -130,9 +132,28 @@ const [isLiked,setIsLiked]=useState(false)
 const [isUnliked,setIsUnliked]=useState(false)
 const [alreadyLiked,setalreadyLiked]=useState(false)
 const [forwardName,setForwardName]=useState("")
+const [avatar,setAvatar]=useState(null)
+
+
 
 const classes=useStyle()
-// this hook help to watch wheter the post is liked by it owner
+// THIS HOOK HELP TO GET THE SPECIFIED AVATAR FROM PROFILE WHERE username==this.username from post
+useEffect(()=>{
+  let unsubscribe
+  let data
+  if(username){
+      unsubscribe=db.collection("profile").where("username","==",username).get()
+      .then(profileGot=>{
+          profileGot.docs.map(doc=> setAvatar({
+              id:doc.id,
+              avatar:doc.data()
+          }))
+      })
+
+  }
+
+},[])
+// this hook help to watch wether the post is liked by it owner
 useEffect(()=>{
     let nameFound
     if(user){
@@ -157,8 +178,6 @@ useEffect(() => {
             comment:doc.data()
         })))
 
-
-  
      })
   }    
     return ()=>unsubscribe()
@@ -266,7 +285,8 @@ const postComment=(e)=>{
            {/* header post__header*/ } 
            <div className={classes.post_headerContainer}>
                  <div className={classes.post__header}>
-                {avatar?<Avatar src={avatar} className={classes.post__avatar} />:<Avatar className={classes.post__avatar}>{username[0]}</Avatar>}
+                   {avatar ?(<Avatar src={avatar.avatar.profilePic} className={classes.post__avatar}/>):(<Avatar className={classes.post__avatar}/>) }
+                  
                 <p className={classes.post__username}>{username}</p> 
      
                 </div>
