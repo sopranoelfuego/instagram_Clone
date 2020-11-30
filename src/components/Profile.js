@@ -106,7 +106,7 @@ const useStyle=makeStyles(theme=>({
     }
     setCurrentUser(auth.currentUser)
 
-  },[])
+  })
 
   console.log("this is a debug fro profile which show profile info line 111 in Profile",profile)
   // THIS HOOK HELP TO GET THE CURRENT USER 
@@ -152,10 +152,10 @@ useEffect(()=>{
       let user =auth.currentUser
 
       if(image){
-        let refImag=storage.ref(`profiles/${user.displayName}`).put(image)
+        let refImag=storage.ref(`profiles/${image.name}`).put(image)
 
         
-    storage.ref(`profiles`).child(user.displayName).getDownloadURL()
+    storage.ref(`profiles`).child(image.name).getDownloadURL()
     .then(
 
       urlGot=>{
