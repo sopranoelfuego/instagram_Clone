@@ -80,6 +80,7 @@
   padding-left: 10px;
   top: 20%;
   padding-right: 80px;
+  overflow: auto;
 }
 .app__addPost{
 
@@ -364,7 +365,7 @@ padding-top: 0;
 .post__online{
   display: block;
   position: fixed;
-
+  overflow: auto;
   width: 40%;
   right: 4px;
   padding-left: 10px;

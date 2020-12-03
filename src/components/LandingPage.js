@@ -3,6 +3,7 @@ import Post from "../components/Post"
 import {db,auth} from "../firebaseConfig"
 import {makeStyles} from "@material-ui/styles"
 import Container from "@material-ui/core/Container"
+import EachPost from "./EachPost"
 
 
 import { Row, Col } from 'antd';
@@ -25,7 +26,24 @@ const LandingPage=()=> {
     const [user,setUser]=useState(null)
     const [openDeletePost,setOpenDeletePost]=useState(false)
     const [openPostDialog,setOpenPostDialog]=useState(false)
+    const [profiles,setProfiles]=useState([])
+    const [ownPorfiles,setOwnProfiles]=useState([])
+    
+    // THIS HOOK WILL GET AND LISTEN TO THE PROFILE
+    useEffect(()=>{
+
+        if(user){
+            db.collection("profile").onSnapshot(snapshot =>{
+                setProfiles(snapshot.docs.map(doc =>({
+                    id:doc.id,
+                    profile:doc.data()
+                })))
+            })
+        }
+    })
+ 
     // THIS HOOKS HELP  TO GET THE CURRENT USER
+
 useEffect(()=>{
     let user=auth.currentUser
     if(user){
@@ -71,7 +89,16 @@ useEffect(()=>{
                 
                 </div>
                 <div className="post__online">
-                <img src="/images/1.jpg" style={{width:"100%"}}/>
+                {/** USERS ARE DISPLAYED HERE*/}
+                {/*<img src="/images/1.jpg" style={{width:"100%"}}/>*/}
+                { 
+                    user ?
+                    profiles.map(pro=>{
+                        let users=[]
+
+
+                    })
+                    :null}
                 </div>
 
             

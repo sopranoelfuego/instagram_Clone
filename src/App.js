@@ -142,8 +142,8 @@ useEffect(()=>{
       
       username:userName,
       profilePic:"",
-      followers:0,
-      following:0,
+      followers:[],
+      following:[],
       posts:0,
       email:email,
       password:password,
