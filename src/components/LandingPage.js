@@ -4,6 +4,7 @@ import {db,auth} from "../firebaseConfig"
 import {makeStyles} from "@material-ui/styles"
 import Container from "@material-ui/core/Container"
 import EachPost from "./EachPost"
+import {EachUser} from "./EachUser"
 
 
 import { Row, Col } from 'antd';
@@ -31,19 +32,21 @@ const LandingPage=()=> {
     
     // THIS HOOK WILL GET AND LISTEN TO THE PROFILE
     useEffect(()=>{
-
-        if(user){
-            db.collection("profile").onSnapshot(snapshot =>{
-                setProfiles(snapshot.docs.map(doc =>({
-                    id:doc.id,
-                    profile:doc.data()
-                })))
-            })
-        }
-    })
+            let user=auth.currentUser
+            if(user){
+                db.collection("profile").where("username","!=",user.displayName).onSnapshot(snapshot =>{
+                    setProfiles(snapshot.docs.map(doc =>({
+                        id:doc.id,
+                        profile:doc.data()
+                    })))
+                })
+            }
+           
+        
+    },[])
  
     // THIS HOOKS HELP  TO GET THE CURRENT USER
-
+console.log("this is profile from each profile component line 47",profiles)
 useEffect(()=>{
     let user=auth.currentUser
     if(user){
@@ -92,13 +95,10 @@ useEffect(()=>{
                 {/** USERS ARE DISPLAYED HERE*/}
                 {/*<img src="/images/1.jpg" style={{width:"100%"}}/>*/}
                 { 
-                    user ?
-                    profiles.map(pro=>{
-                        let users=[]
-
-
-                    })
-                    :null}
+                    
+                    profiles.map(pro => <EachUser key={pro.id} profile={pro.profile} id={pro.id}/>)
+                    
+                    }
                 </div>
 
             

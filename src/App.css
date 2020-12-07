@@ -76,6 +76,8 @@
   
 
   width: 40%;
+  height: 100vh;
+  overflow: auto;
   right: 4px;
   padding-left: 10px;
   top: 20%;
@@ -368,6 +370,8 @@ padding-top: 0;
   overflow: auto;
   width: 40%;
   right: 4px;
+  height: 100vh;
+  overflow: auto;
   padding-left: 10px;
   margin: 0;
   padding: 0;
@@ -491,6 +495,8 @@ padding-top: 0;
   
     width: 40%;
     right: 4px;
+    height: 100vh;
+    overflow: auto;
     padding-left: 10px;
     top: 20%;
 

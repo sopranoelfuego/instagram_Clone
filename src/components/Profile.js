@@ -108,7 +108,6 @@ const useStyle=makeStyles(theme=>({
 
   })
 
-  console.log("this is a debug fro profile which show profile info line 111 in Profile",profile)
   // THIS HOOK HELP TO GET THE CURRENT USER 
   useEffect(()=>{
    

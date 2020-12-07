@@ -2,6 +2,7 @@ import React from 'react'
 import Avatar from "@material-ui/core/Avatar"
 import { makeStyles } from '@material-ui/core/styles';
 import  Button from "@material-ui/core/Button"
+import { BorderStyle, RoundedCorner } from '@material-ui/icons';
 
 
 
@@ -10,7 +11,12 @@ const useStyle=makeStyles(theme =>({
   root :{
       display:"flex",
       flexDirection:"row",
-      justifyContent:"space-between"
+      justifyContent:"space-between",
+      backgroundColor:`rgb(247, 244, 244)`,
+      border:"1px solid peigne",
+     borderRadius:"20%"
+           
+
   },
   informationContainer :{
       display:"flex",
@@ -31,7 +37,7 @@ export const EachUser=(props)=>{
   const {profilePic,username,email,followers}=props.profile
   const {id}=props
 
-  
+  console.log("those are the information from EachUser line 34",props.profile)
   return(
         
     <>
@@ -53,7 +59,7 @@ export const EachUser=(props)=>{
        </div>
        <div className={classes.follow}>
        {/* here i put follow button*/}
-       <Button onClick={()=> console.log("am clicked from eachUser")}>follow</Button>
+       <Button variant='' onClick={()=> console.log("am clicked from eachUser")}>follow</Button>
 
        </div>
       </div>

@@ -256,7 +256,6 @@ const Post = (props) => {
     const displayUserLoggedAlert = () => setUserLogged(userLogged)
     useEffect(() => {
         displayUserLoggedAlert()
-        console.log("value of userLogged from useEffect", userLogged)
 
     }, [isLiked, isUnliked, comment])
 
