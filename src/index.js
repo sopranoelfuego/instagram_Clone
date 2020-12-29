@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from "react-router-dom"
 import firebase from "firebase"
 // this firebase.firestore method help to enlable using firestore servises offline
+// MURIKI GIHE UCUSANGA URIKO UKORESHA AMADONNE ARI MURI CACHES BUT NOT ALL I MEAN ONLY 
+// WHICH ARE STORED IN FIRESTORE
 firebase.firestore().enablePersistence()
   .catch(function(err) {
       if (err.code == 'failed-precondition') {
@@ -47,7 +49,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
 serviceWorker.unregister();
